@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import styles from "../../styles/styles";
+
+import styles from "../../styles/styles.js";
 
 const LoginButton = () => {
   const nav = useNavigation();
@@ -14,9 +15,12 @@ const LoginButton = () => {
       }}
     >
       <View>
-        <Text style={{ color: "white", textAlign: "center" }}>Login</Text>
+        <Text style={{ color: "white", textAlign: "center" }}>
+          Login
+        </Text>
       </View>
     </Pressable>
   );
 };
+
 export default LoginButton;

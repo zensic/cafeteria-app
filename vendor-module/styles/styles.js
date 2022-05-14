@@ -15,6 +15,8 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
+    paddingVertical: 10,
+    marginTop: 5,
     backgroundColor: "blue",
   },
 });
