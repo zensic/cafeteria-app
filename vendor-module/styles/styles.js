@@ -1,5 +1,9 @@
 import { StyleSheet } from 'react-native'
 
+const primaryColor = "blue";
+const secondaryColor = "";
+const accentColor = "";
+
 const styles = StyleSheet.create({
   layout: {
     flex: 1,
@@ -17,8 +21,13 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: 10,
     marginTop: 5,
-    backgroundColor: "blue",
+    backgroundColor: `${primaryColor}`,
   },
+  banner: {
+    width: "100%",
+    height: 50,
+    borderRadius: 12
+  }
 });
 
 export default styles
