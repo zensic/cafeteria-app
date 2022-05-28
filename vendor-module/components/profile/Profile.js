@@ -24,7 +24,7 @@ const Profile = () => {
 
   return (
     <View>
-      <Text>Profile</Text>
+      
       <CustomButton
         callback={handleSignOut}
         content={"Sign Out"}

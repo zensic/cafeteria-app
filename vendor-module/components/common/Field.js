@@ -24,6 +24,5 @@ export default Field;
 const styles = StyleSheet.create({
   field: {
     width: '100%',
-    backgroundColor: 'red'
   }
 });

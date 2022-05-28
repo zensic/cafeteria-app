@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-const primaryColor = "blue";
+const primaryColor = "#F4A15D";
 const secondaryColor = "";
 const accentColor = "";
 
@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "yellow",
   },
   title: {
     margin: 24,
@@ -22,11 +21,36 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 5,
     backgroundColor: `${primaryColor}`,
+    borderRadius: 12
   },
   banner: {
     width: "100%",
     height: 50,
     borderRadius: 12
+  },
+  foodBannerImage: {
+    height: 200, width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  foodBannerImageText: {
+    height: "100%",
+    width: "100%",
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 16,
+    color: "white",
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
+  },
+  foodItemContainer: {
+
+    borderRadius: 12,
+    overflow: "hidden",
+    marginTop: 5,
+  },
+  foodItemImage: {
+    width: "100%",
+    height: 100,
   }
 });
 

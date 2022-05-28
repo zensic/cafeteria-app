@@ -1,12 +1,46 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, Pressable, ImageBackground } from "react-native";
+import React, { useState } from "react";
+import CustomButton from "../common/CustomButton";
+import Field from "../common/Field";
+import styles from "../../styles/styles.js";
+import { useNavigation } from "@react-navigation/native";
 
 const FoodCreate = () => {
+  const nav = useNavigation();
+
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+
+  const handleCancel = () => {
+    nav.navigate("Food Listing")
+  }
+
   return (
     <View>
-      <Text>FoodCreate</Text>
+      <Pressable>
+        <ImageBackground
+          style={styles.foodBannerImage}
+          source={require("../../assets/images/upload-food.jpg")}
+        >
+          <Text style={styles.foodBannerImageText}>Upload Image</Text>
+        </ImageBackground>
+      </Pressable>
+      <Field
+        label={"Food Name"}
+        value={name}
+        placeholder={"Enter your name here"}
+        callback={setName}
+      />
+      <Field
+        label={"Food Price"}
+        value={price}
+        placeholder={"Enter your price here"}
+        callback={setPrice}
+      />
+      <CustomButton content={"Confirm"} cstyle={styles.button} />
+      <CustomButton callback={handleCancel} content={"Cancel"} cstyle={styles.button} />
     </View>
-  )
-}
+  );
+};
 
-export default FoodCreate
+export default FoodCreate;

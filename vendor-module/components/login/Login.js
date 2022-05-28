@@ -41,14 +41,14 @@ const Login = () => {
         <Field
           label={"Username"}
           value={email}
-          placeholder={"Type your email here"}
+          placeholder={"Enter your email here"}
           callback={setEmail}
         />
         <Field
           label={"Password"}
           value={password}
           secure={true}
-          placeholder={"Type your password here"}
+          placeholder={"Enter your password here"}
           callback={setPassword}
         />
         <CustomButton callback={handleLogin} content={'Login'} cstyle={styles.button}/>

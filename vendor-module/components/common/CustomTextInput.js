@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const OpeningHours = () => {
+const CustomTextInput = () => {
   return (
     <View>
-      <Text>OpeningHours</Text>
+      <Text>CustomTextInput</Text>
     </View>
   )
 }
 
-export default OpeningHours
+export default CustomTextInput
