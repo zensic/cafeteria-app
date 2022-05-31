@@ -1,5 +1,7 @@
 import { View, Text, Pressable, ImageBackground } from "react-native";
 import React, { useState } from "react";
+
+import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import Field from "../common/Field";
 import styles from "../../styles/styles.js";
@@ -12,8 +14,8 @@ const FoodCreate = () => {
   const [price, setPrice] = useState("");
 
   const handleCancel = () => {
-    nav.navigate("Food Listing")
-  }
+    nav.navigate("Food Listing");
+  };
 
   return (
     <View>
@@ -25,20 +27,26 @@ const FoodCreate = () => {
           <Text style={styles.foodBannerImageText}>Upload Image</Text>
         </ImageBackground>
       </Pressable>
-      <Field
-        label={"Food Name"}
-        value={name}
-        placeholder={"Enter your name here"}
-        callback={setName}
-      />
-      <Field
-        label={"Food Price"}
-        value={price}
-        placeholder={"Enter your price here"}
-        callback={setPrice}
-      />
-      <CustomButton content={"Confirm"} cstyle={styles.button} />
-      <CustomButton callback={handleCancel} content={"Cancel"} cstyle={styles.button} />
+      <CenterWrapper>
+        <Field
+          label={"Food Name"}
+          value={name}
+          placeholder={"Enter your name here"}
+          callback={setName}
+        />
+        <Field
+          label={"Food Price"}
+          value={price}
+          placeholder={"Enter your price here"}
+          callback={setPrice}
+        />
+        <CustomButton content={"Confirm"} cstyle={styles.button} />
+        <CustomButton
+          callback={handleCancel}
+          content={"Cancel"}
+          cstyle={styles.buttonCancel}
+        />
+      </CenterWrapper>
     </View>
   );
 };

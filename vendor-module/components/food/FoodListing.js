@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 import styles from "../../styles/styles.js";
@@ -14,6 +13,10 @@ const FoodListing = () => {
     nav.navigate("Food Creation");
   };
 
+  const handleViewFood = () => {
+    nav.navigate("Food Details");
+  }
+
   return (
     <CenterWrapper>
       <CustomButton
@@ -24,9 +27,10 @@ const FoodListing = () => {
       {data.food.map((foodItem) => (
         <FoodItem
           key={foodItem.id}
+          callback={handleViewFood}
           image={foodItem.url}
           foodName={foodItem.name}
-          foodPrice={foodItem.price}
+          foodPrice={foodItem.price.toFixed(2)}
         />
       ))}
     </CenterWrapper>
@@ -52,13 +56,13 @@ const data = {
     {
       id: 3,
       name: "Nasi lemak",
-      price: 3.5,
+      price: 6,
       url: "",
     },
     {
       id: 4,
       name: "Roti canai",
-      price: 3.0,
+      price: 3.99,
       url: "",
     },
   ],

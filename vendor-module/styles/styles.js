@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
 const primaryColor = "#F4A15D";
-const secondaryColor = "";
-const accentColor = "";
+const secondaryColor = "#756150";
+const accentColor = "#F7CBA8";
 
 const styles = StyleSheet.create({
   layout: {
@@ -21,6 +21,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 5,
     backgroundColor: `${primaryColor}`,
+    borderRadius: 12,
+  },
+  buttonCancel: {
+    width: "100%",
+    paddingVertical: 10,
+    marginTop: 5,
+    backgroundColor: `${secondaryColor}`,
     borderRadius: 12,
   },
   banner: {
@@ -59,11 +66,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   foodItemTitle: {
-    backgroundColor: "#F7CBA8",
+    backgroundColor: `${accentColor}`,
     flexDirection: "row",
     padding: 10,
     justifyContent: "space-between",
   },
 });
 
+export { primaryColor, secondaryColor, accentColor};
 export default styles;

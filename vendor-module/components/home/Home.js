@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 
 import React from "react";
+import { primaryColor } from "../../styles/styles.js";
 import Orders from "../orders/Orders.js";
 import Food from "../food/Food.js";
 import Reports from "../reports/Reports.js";
@@ -12,7 +13,11 @@ const BottomTabs = createBottomTabNavigator();
 
 const Home = () => {
   return (
-    <BottomTabs.Navigator>
+    <BottomTabs.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: {primaryColor},
+      }}
+    >
       <BottomTabs.Screen
         name="Orders"
         component={Orders}
@@ -33,7 +38,7 @@ const Home = () => {
               color={color}
             />
           ),
-          headerShown: false
+          headerShown: false,
         }}
       />
       <BottomTabs.Screen

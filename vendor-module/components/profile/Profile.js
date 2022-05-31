@@ -2,10 +2,10 @@ import { Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { signOut } from "firebase/auth";
-
 import { auth } from "../../firebase";
-import CustomButton from "../common/CustomButton";
 import styles from "../../styles/styles";
+import CustomButton from "../common/CustomButton";
+import CenterWrapper from "../common/CenterWrapper";
 
 const Profile = () => {
   const nav = useNavigation();
@@ -23,13 +23,13 @@ const Profile = () => {
   };
 
   return (
-    <View>
+    <CenterWrapper>
       <CustomButton
         callback={handleSignOut}
         content={"Sign Out"}
         cstyle={styles.button}
       />
-    </View>
+    </CenterWrapper>
   );
 };
 
