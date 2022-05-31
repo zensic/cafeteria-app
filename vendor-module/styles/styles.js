@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
 const primaryColor = "#F4A15D";
 const secondaryColor = "";
@@ -21,15 +21,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 5,
     backgroundColor: `${primaryColor}`,
-    borderRadius: 12
+    borderRadius: 12,
   },
   banner: {
     width: "100%",
     height: 50,
-    borderRadius: 12
+    borderRadius: 12,
   },
   foodBannerImage: {
-    height: 200, width: "100%",
+    height: 200,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -40,10 +41,9 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: 16,
     color: "white",
-    backgroundColor: "rgba(0, 0, 0, 0.5)"
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   foodItemContainer: {
-
     borderRadius: 12,
     overflow: "hidden",
     marginTop: 5,
@@ -51,7 +51,19 @@ const styles = StyleSheet.create({
   foodItemImage: {
     width: "100%",
     height: 100,
-  }
+  },
+  foodItemImageContainer: {
+    flexDirection: "row",
+    marginTop: 5,
+    marginLeft: 10,
+    justifyContent: "space-between",
+  },
+  foodItemTitle: {
+    backgroundColor: "#F7CBA8",
+    flexDirection: "row",
+    padding: 10,
+    justifyContent: "space-between",
+  },
 });
 
-export default styles
+export default styles;

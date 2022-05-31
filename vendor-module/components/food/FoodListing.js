@@ -4,6 +4,7 @@ import React from "react";
 import styles from "../../styles/styles.js";
 import CustomButton from "../common/CustomButton";
 import FoodItem from "./FoodItem.js";
+import CenterWrapper from "../common/CenterWrapper.js";
 import { useNavigation } from "@react-navigation/native";
 
 const FoodListing = () => {
@@ -14,23 +15,21 @@ const FoodListing = () => {
   };
 
   return (
-    <View style={{ width: "100%", alignItems: "center" }}>
-      <View style={{ width: "90%" }}>
-        <CustomButton
-          callback={handleCreateFood}
-          content={"Create New Food"}
-          cstyle={styles.button}
+    <CenterWrapper>
+      <CustomButton
+        callback={handleCreateFood}
+        content={"Create New Food"}
+        cstyle={styles.button}
+      />
+      {data.food.map((foodItem) => (
+        <FoodItem
+          key={foodItem.id}
+          image={foodItem.url}
+          foodName={foodItem.name}
+          foodPrice={foodItem.price}
         />
-        {data.food.map((foodItem) => (
-          <FoodItem
-            key={foodItem.id}
-            image={foodItem.url}
-            foodName={foodItem.name}
-            foodPrice={foodItem.price}
-          />
-        ))}
-      </View>
-    </View>
+      ))}
+    </CenterWrapper>
   );
 };
 

@@ -1,12 +1,13 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
+import CenterWrapper from "../common/CenterWrapper.js";
 import styles from "../../styles/styles.js";
 import CustomButton from "../common/CustomButton.js";
 
 const Orders = () => {
   return (
-    <View>
+    <CenterWrapper>
       <CustomButton content={"View Order History"} cstyle={styles.button} />
       <Text>Orders</Text>
       {data.orders.map((order) => (
@@ -16,7 +17,7 @@ const Orders = () => {
           cstyle={styles.button}
         />
       ))}
-    </View>
+    </CenterWrapper>
   );
 };
 
