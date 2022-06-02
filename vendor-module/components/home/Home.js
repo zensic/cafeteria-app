@@ -15,7 +15,7 @@ const Home = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={{
-        tabBarActiveTintColor: {primaryColor},
+        tabBarActiveTintColor: `${primaryColor}`,
       }}
     >
       <BottomTabs.Screen

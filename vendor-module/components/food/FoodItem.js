@@ -9,7 +9,7 @@ const FoodItem = (props) => {
     <Pressable
       style={styles.foodItemContainer}
       onPress={() => {
-        props.callback();
+        props.callback(props.foodName, props.foodPrice);
       }}
     >
       <ImageBackground

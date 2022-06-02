@@ -4,17 +4,15 @@ import styles from "../../styles/styles.js";
 import CustomButton from "../common/CustomButton";
 import FoodItem from "./FoodItem.js";
 import CenterWrapper from "../common/CenterWrapper.js";
-import { useNavigation } from "@react-navigation/native";
 
-const FoodListing = () => {
-  const nav = useNavigation();
+const FoodListing = ({navigation}) => {
 
   const handleCreateFood = () => {
-    nav.navigate("Food Creation");
+    navigation.navigate("Food Creation");
   };
 
-  const handleViewFood = () => {
-    nav.navigate("Food Details");
+  const handleViewFood = (name, price) => {
+    navigation.navigate("Food Details", {foodName: name, foodPrice: price});
   }
 
   return (
