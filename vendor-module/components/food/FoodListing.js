@@ -11,10 +11,6 @@ const FoodListing = ({navigation}) => {
     navigation.navigate("Food Creation");
   };
 
-  const handleViewFood = (name, price) => {
-    navigation.navigate("Food Details", {foodName: name, foodPrice: price});
-  }
-
   return (
     <CenterWrapper>
       <CustomButton
@@ -25,7 +21,6 @@ const FoodListing = ({navigation}) => {
       {data.food.map((foodItem) => (
         <FoodItem
           key={foodItem.id}
-          callback={handleViewFood}
           image={foodItem.url}
           foodName={foodItem.name}
           foodPrice={foodItem.price.toFixed(2)}

@@ -5,16 +5,13 @@ import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import Field from "../common/Field";
 import styles from "../../styles/styles.js";
-import { useNavigation } from "@react-navigation/native";
 
-const FoodCreate = () => {
-  const nav = useNavigation();
-
+const FoodCreate = ({ navigation }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
   const handleCancel = () => {
-    nav.navigate("Food Listing");
+    navigation.navigate("Food Listing");
   };
 
   return (
