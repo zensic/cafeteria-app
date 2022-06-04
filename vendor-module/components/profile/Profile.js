@@ -1,36 +1,18 @@
-import { Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
-import styles from "../../styles/styles";
-import CustomButton from "../common/CustomButton";
-import CenterWrapper from "../common/CenterWrapper";
+import { createStackNavigator } from "@react-navigation/stack";
+import ProfileDetails from "./ProfileDetails";
+import ProfileEdit from "./ProfileEdit";
+
+const Stack = createStackNavigator();
 
 const Profile = () => {
-  const nav = useNavigation();
-
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out sucessful
-        nav.replace("login");
-      })
-      .catch((error) => {
-        // An error happened
-        alert(error.message);
-      });
-  };
-
   return (
-    <CenterWrapper>
-      <CustomButton
-        callback={handleSignOut}
-        content={"Sign Out"}
-        cstyle={styles.button}
-      />
-    </CenterWrapper>
-  );
+    <Stack.Navigator>
+      <Stack.Screen name="Shop Details" component={ProfileDetails}/>
+      <Stack.Screen name="Edit Details" component={ProfileEdit} />
+    </Stack.Navigator>
+  )
+
 };
 
 export default Profile;

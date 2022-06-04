@@ -25,6 +25,7 @@ const Home = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="receipt" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <BottomTabs.Screen
@@ -57,6 +58,7 @@ const Home = () => {
           tabBarIcon: ({ color, size }) => (
             <Entypo name="shop" size={size} color={color} />
           ),
+          headerShown: false,
         }}
       />
     </BottomTabs.Navigator>

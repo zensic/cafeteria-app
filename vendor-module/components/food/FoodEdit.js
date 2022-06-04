@@ -47,7 +47,7 @@ const FoodEdit = ({ route, navigation }) => {
         <CustomButton
           callback={handleCancel}
           content={"Cancel"}
-          cstyle={styles.buttonCancel}
+          cstyle={styles.buttonSecondary}
         />
       </CenterWrapper>
     </View>

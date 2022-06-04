@@ -4,28 +4,30 @@ import styles from "../../styles/styles.js";
 import CustomButton from "../common/CustomButton";
 import FoodItem from "./FoodItem.js";
 import CenterWrapper from "../common/CenterWrapper.js";
+import { ScrollView } from "react-native-gesture-handler";
 
-const FoodListing = ({navigation}) => {
-
+const FoodListing = ({ navigation }) => {
   const handleCreateFood = () => {
     navigation.navigate("Food Creation");
   };
 
   return (
     <CenterWrapper>
-      <CustomButton
-        callback={handleCreateFood}
-        content={"Create New Food"}
-        cstyle={styles.button}
-      />
-      {data.food.map((foodItem) => (
-        <FoodItem
-          key={foodItem.id}
-          image={foodItem.url}
-          foodName={foodItem.name}
-          foodPrice={foodItem.price.toFixed(2)}
+      <ScrollView>
+        <CustomButton
+          callback={handleCreateFood}
+          content={"Create New Food"}
+          cstyle={styles.button}
         />
-      ))}
+        {data.food.map((foodItem) => (
+          <FoodItem
+            key={foodItem.id}
+            image={foodItem.url}
+            foodName={foodItem.name}
+            foodPrice={foodItem.price.toFixed(2)}
+          />
+        ))}
+      </ScrollView>
     </CenterWrapper>
   );
 };

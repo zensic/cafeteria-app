@@ -1,26 +1,52 @@
-import { View, Text } from "react-native";
+import { Text, Pressable } from "react-native";
 import React from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 import styles from "../../styles/styles.js";
+import { accentColor } from "../../styles/styles.js";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton.js";
+import { ScrollView } from "react-native-gesture-handler";
 
 const OrderListing = ({ navigation }) => {
-  const handleView = () => {
-    navigation.navigate();
+  const handleHistory = () => {
+    navigation.navigate("Order History");
+  };
+
+  const handleView = (orderItem) => {
+    navigation.navigate("Order Details", { order: orderItem });
   };
 
   return (
     <CenterWrapper>
-      <CustomButton content={"View Order History"} cstyle={styles.button} />
-      {data.orders.map((order) => (
+      <ScrollView>
         <CustomButton
-          callback={handleView}
-          key={order.id}
-          content={`#${order.id} ${order.status} ${order.time}`}
+          callback={handleHistory}
+          content={"View Order History"}
           cstyle={styles.button}
         />
-      ))}
+        {data.orders.map((order) => (
+          <Pressable
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 5,
+              padding: 10,
+              borderRadius: 12,
+              backgroundColor: accentColor,
+            }}
+            onPress={() => {
+              handleView(order);
+            }}
+            key={order.id}
+          >
+            <FontAwesome5 name="clipboard" size={24} color="black" />
+            <Text
+              style={{ marginLeft: 10 }}
+            >{`Order #${order.id} ${order.status} ${order.time}`}</Text>
+          </Pressable>
+        ))}
+      </ScrollView>
     </CenterWrapper>
   );
 };

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     backgroundColor: `${primaryColor}`,
     borderRadius: 12,
   },
-  buttonCancel: {
+  buttonSecondary: {
     width: "100%",
     paddingVertical: 10,
     marginTop: 5,
@@ -71,6 +71,13 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-between",
   },
+  orderLabel: {
+    marginTop: 5
+  },
+  orderValue: {
+    fontWeight: "bold"
+  },
+  
 });
 
 export { primaryColor, secondaryColor, accentColor};
