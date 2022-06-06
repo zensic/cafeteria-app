@@ -52,7 +52,7 @@ const Login = () => {
           callback={setPassword}
         />
         <CustomButton callback={handleLogin} content={'Login'} cstyle={styles.button}/>
-        <CustomButton callback={handleSignUp} content={'Register'} cstyle={styles.button}/>
+        <CustomButton callback={handleSignUp} content={'Register'} cstyle={styles.buttonSecondary}/>
       </View>
     </KeyboardAvoidingView>
   );

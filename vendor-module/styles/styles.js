@@ -77,7 +77,14 @@ const styles = StyleSheet.create({
   orderValue: {
     fontWeight: "bold"
   },
-  
+  orderItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5,
+    padding: 10,
+    borderRadius: 12,
+    backgroundColor: accentColor,
+  }
 });
 
 export { primaryColor, secondaryColor, accentColor};

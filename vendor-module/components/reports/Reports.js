@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 import styles from "../../styles/styles.js";
+import CenterWrapper from "../common/CenterWrapper.js";
 
 const Reports = () => {
   return (
-    <View>
+    <CenterWrapper>
       <Text>Reports</Text>
-    </View>
+    </CenterWrapper>
   );
 };
 

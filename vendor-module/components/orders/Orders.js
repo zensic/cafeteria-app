@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 const Orders = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Order Listing" component={OrderListing} />
+      <Stack.Screen name="Incoming Orders" component={OrderListing} />
       <Stack.Screen name="Order History" component={OrderHistory} />
       <Stack.Screen name="Order Details" component={OrderDetails} />
     </Stack.Navigator>

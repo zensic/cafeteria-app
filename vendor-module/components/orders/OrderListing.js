@@ -3,7 +3,6 @@ import React from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import styles from "../../styles/styles.js";
-import { accentColor } from "../../styles/styles.js";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton.js";
 import { ScrollView } from "react-native-gesture-handler";
@@ -27,14 +26,7 @@ const OrderListing = ({ navigation }) => {
         />
         {data.orders.map((order) => (
           <Pressable
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 5,
-              padding: 10,
-              borderRadius: 12,
-              backgroundColor: accentColor,
-            }}
+            style={styles.orderItem}
             onPress={() => {
               handleView(order);
             }}

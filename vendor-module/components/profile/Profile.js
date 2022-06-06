@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const Profile = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Shop Details" component={ProfileDetails}/>
+      <Stack.Screen name="Stall Details" component={ProfileDetails}/>
       <Stack.Screen name="Edit Details" component={ProfileEdit} />
     </Stack.Navigator>
   )
