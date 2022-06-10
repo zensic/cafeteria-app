@@ -1,2 +1,2 @@
 # cafeteria-app
- A cafeteria food odering application built with react native
+ A cafeteria application for university food vendors built with react native and firebase
