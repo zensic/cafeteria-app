@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import { View, StyleSheet, ImageBackground } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -6,22 +6,26 @@ import { auth, fbSignUp, fbSignIn } from "../../firebase.js";
 
 import styles from "../../styles/styles.js";
 import Field from "../common/Field.js";
-import CustomButton from "../common/CustomButton.js";
+import CustomButton from "../common/CustomButtom.js";
+import LoadingScreen from "../common/LoadingScreen.js";
 
 const Login = () => {
   const nav = useNavigation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
+        setLoading(false);
         nav.replace("home");
       } else {
         // User is signed out
+        setLoading(false);
       }
     });
   });
@@ -31,6 +35,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setLoading(true);
     fbSignIn(email, password);
   };
 
@@ -39,8 +44,8 @@ const Login = () => {
       source={require("../../assets/images/login-1.jpg")}
       style={loginStyle.loginLayout}
     >
+      <LoadingScreen visible={loading}/>
       <View style={loginStyle.loginContainer}>
-        <Text style={styles.title}>Vendor Login</Text>
         <Field
           label={"Username"}
           value={email}
@@ -80,7 +85,7 @@ const loginStyle = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: 16,
     borderRadius: 12,
-  },
+  }
 });
 
 export default Login;
