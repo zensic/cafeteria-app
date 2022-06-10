@@ -1,37 +1,22 @@
 import { View, Text } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import React from "react";
 
-import { auth } from '../../firebase';
-import { signOut } from "firebase/auth";
 import styles from "../../styles/styles";
-import CustomButton from "../common/CustomButtom";
+import Vendors from "../vendors/Vendors";
+import Profile from "../profile/Profile";
+import History from "../history/History";
 
-const Home = ({navigation}) => {
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out sucessful
-        navigation.replace("login");
-      })
-      .catch((error) => {
-        // An error happened
-        alert(error.message);
-      });
-  };
+const Drawer = createDrawerNavigator();
+
+const Home = () => {
 
   return (
-    <View>
-      <Text>Home</Text>
-      <Text>Home</Text>
-      <Text>Home</Text>
-      <Text>Home</Text>
-      <Text>Home</Text>
-      <CustomButton
-        callback={handleSignOut}
-        content={"Sign Out"}
-        cstyle={styles.buttonSecondary}
-      />
-    </View>
+    <Drawer.Navigator>
+      <Drawer.Screen name="Vendors" component={Vendors} />
+      <Drawer.Screen name="Profile" component={Profile} />
+      <Drawer.Screen name="History" component={History} />
+    </Drawer.Navigator>
   );
 };
 
