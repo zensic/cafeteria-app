@@ -26,6 +26,7 @@ const searchStyle = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     padding: 10,
+    marginTop: 5,
     borderRadius: 12,
     backgroundColor: `${accentColor}`,
   },
