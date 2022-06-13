@@ -11,20 +11,16 @@ const Profile = () => {
           source={require("../../assets/images/profile-1.jpg")}
         />
       </View>
-
-      <Text style={styles.label}>Name</Text>
-      <Text style={styles.field}>John</Text>
+      <Text style={styles.name}>Average Joe</Text>
       <Text style={styles.label}>Email</Text>
-      <Text style={styles.field}>john123@mail.com</Text>
+      <Text style={styles.field}>joe@mail.com</Text>
       <Text style={styles.label}>Password</Text>
       <Text style={styles.field}>******</Text>
       <Text style={styles.label}>Mobile Number</Text>
-      <Text style={styles.field}>016-88667799</Text>
+      <Text style={styles.field}>60123456789</Text>
     </CenterWrapper>
   );
 };
-
-export default Profile;
 
 const styles = StyleSheet.create({
   imageContainer: {
@@ -34,15 +30,32 @@ const styles = StyleSheet.create({
   image: {
     height: 200,
     width: 200,
-    borderRadius: 100
+    borderRadius: 100,
+  },
+  name: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 24,
   },
   label: {
     // fontSize: 18,
     // fontWeight: "bold",
-    marginTop: 40,
+    marginTop: 10,
   },
   field: {
-    fontSize: 18,
+    // fontSize: 18,
     fontWeight: "bold",
-  }
+  },
 });
+
+export default Profile;
+
+const data = {
+  profile: [
+    {
+      name: "Average Joe",
+      email: "joe@mail.com",
+      mobileNumber: "0123456789",
+    },
+  ],
+};
