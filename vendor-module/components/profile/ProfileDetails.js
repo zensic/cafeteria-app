@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { auth } from "../../firebase";
@@ -34,36 +34,22 @@ const ProfileDetails = ({ navigation }) => {
         source={require("../../assets/images/upload-food.jpg")}
       />
       <CenterWrapper>
-        <Text style={{ fontWeight: "bold", fontSize: 18, marginVertical: 10 }}>
-          ABC Stall
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            marginVertical: 10,
-            alignItems: "center",
-          }}
-        >
+        <Text style={profileStyle.vendorName}>ABC Stall</Text>
+        <View style={profileStyle.vendorField}>
           <Entypo
             name="location"
             size={24}
             color={primaryColor}
-            style={{ marginRight: 10 }}
+            style={profileStyle.vendorFieldIcon}
           />
-          <Text style={{}}>123, Jalan Rock, 93300 Kuching, Sarawak</Text>
+          <Text>123, Jalan Rock, 93300 Kuching, Sarawak</Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            marginVertical: 10,
-            alignItems: "center",
-          }}
-        >
+        <View style={profileStyle.vendorField}>
           <FontAwesome5
             name="clock"
             size={24}
             color={primaryColor}
-            style={{ marginRight: 10 }}
+            style={profileStyle.vendorFieldIcon}
           />
           <View>
             <Text style={{ marginTop: 5 }}>Opening times</Text>
@@ -85,5 +71,19 @@ const ProfileDetails = ({ navigation }) => {
     </View>
   );
 };
+
+const profileStyle = StyleSheet.create({
+  vendorName: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginVertical: 10,
+  },
+  vendorField: {
+    flexDirection: "row",
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  vendorFieldIcon: { marginRight: 10 },
+});
 
 export default ProfileDetails;
