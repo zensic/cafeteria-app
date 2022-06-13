@@ -15,13 +15,11 @@ const Home = () => {
         name="Place an order"
         component={Vendors}
         options={{
-          headerRight: () => (
-            <CartButton />
-          ),
+          headerRight: () => <CartButton />,
         }}
       />
-      <Drawer.Screen name="Profile" component={Profile} />
       <Drawer.Screen name="Order history" component={Orders} />
+      <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   );
 };

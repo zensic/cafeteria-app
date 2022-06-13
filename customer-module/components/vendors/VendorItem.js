@@ -1,15 +1,21 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 
 import { primaryColor } from "../../styles/styles";
 
 const VendorItem = (props) => {
+  const nav = useNavigation();
+
   return (
     <Pressable
       style={vendorItemStyle.container}
       onPress={() => {
-        props.callback();
+        nav.navigate("Vendor Food Listing", {
+          vendorName: props.name,
+          vendorRating: props.rating,
+        });
       }}
     >
       <Image

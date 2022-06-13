@@ -34,10 +34,7 @@ const FoodItem = (props) => {
       >
         <View style={styles.foodItemImageContainer}>
           <Text
-            style={{
-              color: "white",
-              backgroundColor: "black",
-            }}
+            style={styles.foodItemStar}
           >
             4.4 <FontAwesome name="star" size={16} color="white" />
           </Text>
@@ -45,12 +42,12 @@ const FoodItem = (props) => {
             <CustomButton
               callback={handleEditFood}
               content="Edit"
-              cstyle={{ backgroundColor: "#F4A15D" }}
+              cstyle={styles.foodItemButton}
             />
             <CustomButton
               callback={handleDeleteFood}
               content="Delete"
-              cstyle={{ backgroundColor: "#F4A15D", marginLeft: 5 }}
+              cstyle={styles.foodItemButton}
             />
           </View>
         </View>

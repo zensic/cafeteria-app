@@ -2,7 +2,7 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { auth } from '../../firebase';
+import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 
 import styles from "../../styles/styles";
@@ -34,8 +34,16 @@ const ProfileDetails = ({ navigation }) => {
         source={require("../../assets/images/upload-food.jpg")}
       />
       <CenterWrapper>
-        <Text style={{ fontWeight: "bold", fontSize: 18, marginVertical: 10 }}>ABC Stall</Text>
-        <View style={{ flexDirection: "row", marginVertical: 10, alignItems: "center" }}>
+        <Text style={{ fontWeight: "bold", fontSize: 18, marginVertical: 10 }}>
+          ABC Stall
+        </Text>
+        <View
+          style={{
+            flexDirection: "row",
+            marginVertical: 10,
+            alignItems: "center",
+          }}
+        >
           <Entypo
             name="location"
             size={24}
@@ -44,7 +52,13 @@ const ProfileDetails = ({ navigation }) => {
           />
           <Text style={{}}>123, Jalan Rock, 93300 Kuching, Sarawak</Text>
         </View>
-        <View style={{ flexDirection: "row", marginVertical: 10, alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            marginVertical: 10,
+            alignItems: "center",
+          }}
+        >
           <FontAwesome5
             name="clock"
             size={24}

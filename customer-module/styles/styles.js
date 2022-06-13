@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   foodItemContainer: {
     borderRadius: 12,
     overflow: "hidden",
-    marginTop: 5,
+    marginTop: 10,
   },
   foodItemImage: {
     width: "100%",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   foodItemImageContainer: {
     flexDirection: "row",
     marginTop: 5,
-    marginLeft: 10,
+    marginLeft: 5,
     justifyContent: "space-between",
   },
   foodItemTitle: {
@@ -65,6 +65,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 10,
     justifyContent: "space-between",
+  },
+  foodItemStar: {
+    padding: 5,
+    borderRadius: 12,
+    backgroundColor: `${primaryColor}`,
+    color: "white",
   },
   orderLabel: {
     marginTop: 5

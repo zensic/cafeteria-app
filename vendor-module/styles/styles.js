@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 
-const primaryColor = "#F4A15D";
-const secondaryColor = "#756150";
-const accentColor = "#F7CBA8";
+const primaryColor = "#58B327";
+const secondaryColor = "#466635";
+const accentColor = "#A1EA7A";
 
 const styles = StyleSheet.create({
   title: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   foodItemContainer: {
     borderRadius: 12,
     overflow: "hidden",
-    marginTop: 5,
+    marginTop: 10,
   },
   foodItemImage: {
     width: "100%",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   foodItemImageContainer: {
     flexDirection: "row",
     marginTop: 5,
-    marginLeft: 10,
+    marginLeft: 5,
     justifyContent: "space-between",
   },
   foodItemTitle: {
@@ -66,11 +66,22 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "space-between",
   },
+  foodItemButton: {
+    backgroundColor: `${secondaryColor}`,
+    marginRight: 5,
+    padding: 5
+  },
+  foodItemStar: {
+    padding: 5,
+    borderRadius: 12,
+    backgroundColor: `${primaryColor}`,
+    color: "white",
+  },
   orderLabel: {
-    marginTop: 5
+    marginTop: 5,
   },
   orderValue: {
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   orderItem: {
     flexDirection: "row",
@@ -79,8 +90,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 12,
     backgroundColor: accentColor,
-  }
+  },
 });
 
-export { primaryColor, secondaryColor, accentColor};
+export { primaryColor, secondaryColor, accentColor };
 export default styles;

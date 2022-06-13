@@ -7,12 +7,14 @@ import { auth, fbSignUp, fbSignIn } from "../../firebase.js";
 import styles from "../../styles/styles.js";
 import Field from "../common/Field.js";
 import CustomButton from "../common/CustomButton.js";
+import LoadingScreen from "../common/LoadingScreen.js";
 
 const Login = () => {
   const nav = useNavigation();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -31,6 +33,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
+    setLoading(true);
     fbSignIn(email, password);
   };
 
@@ -39,6 +42,7 @@ const Login = () => {
       source={require("../../assets/images/login-1.jpg")}
       style={loginStyle.loginLayout}
     >
+      <LoadingScreen visible={loading}/>
       <View style={loginStyle.loginContainer}>
         <Text style={styles.title}>Vendor Login</Text>
         <Field
