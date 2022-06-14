@@ -18,7 +18,9 @@ const Vendors = () => {
       <Stack.Screen
         name="Vendor Food Listing"
         component={VendorFoodListing}
-        options={{ headerShown: false}}
+        options={{
+          headerRight: () => <CartButton />,
+        }}
       />
     </Stack.Navigator>
   );

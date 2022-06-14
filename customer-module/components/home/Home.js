@@ -6,6 +6,7 @@ import Profile from "../profile/Profile";
 import Orders from "../orders/Orders";
 import CartButton from "../common/CartButton";
 import { primaryColor, secondaryColor, accentColor } from "../../styles/styles";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,14 +17,20 @@ const Home = () => {
       screenOptions={{
         drawerActiveTintColor: secondaryColor,
         drawerActiveBackgroundColor: accentColor,
-        drawerStyle: {backgroundColor: primaryColor}
+        drawerStyle: { backgroundColor: primaryColor },
       }}
     >
       <Drawer.Screen
         name="Place an order"
         component={Vendors}
-        options={{
-          headerRight: () => <CartButton />,
+        options={({ route }) => {
+          const routeName = getFocusedRouteNameFromRoute(route) ?? "";
+
+          // If child route (in stack navigator) is on vendor food listing, disable header
+          // Else only add cart buttons 
+          if (routeName == "Vendor Food Listing")
+            return { headerShown: false, headerRight: () => <CartButton /> };
+          return { headerRight: () => <CartButton /> };
         }}
       />
       <Drawer.Screen name="Order history" component={Orders} />

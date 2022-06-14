@@ -1,11 +1,20 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { View, Text } from 'react-native'
+import { createStackNavigator } from "@react-navigation/stack";
+
+import OrderListing from "./OrderListing";
+
+const Stack = createStackNavigator();
 
 const Orders = () => {
   return (
-    <View>
-      <Text>Orders</Text>
-    </View>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="OrderListing"
+        component={OrderListing}
+        options={{ headerShown: false}}
+      />
+    </Stack.Navigator>
   )
 }
 
