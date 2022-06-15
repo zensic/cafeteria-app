@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginLeft: 10,
+    justifyContent: "center"
   },
   vendorImage: {
     height: 100,

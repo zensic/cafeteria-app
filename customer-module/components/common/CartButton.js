@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
@@ -6,9 +6,12 @@ import { primaryColor } from "../../styles/styles";
 import Cart from "../cart/Cart";
 
 const CartButton = () => {
+
+  const [visible, setVisible] = useState(false);
+
   return (
-    <Pressable style={cartStyle.cart} onPress={() => {}}>
-      <Cart visible={false} />
+    <Pressable style={cartStyle.cart} onPress={() => setVisible(true)}>
+      <Cart visible={visible} setVisible={setVisible}/>
       <Entypo name="shopping-cart" size={24} color="white" />
       <Text style={cartStyle.cartText}>Cart</Text>
     </Pressable>

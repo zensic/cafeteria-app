@@ -9,7 +9,7 @@ const CustomButton = (props) => {
         props.callback();
       }}
     >
-      <Text style={{ color: "white", textAlign: "center" }}>
+      <Text style={[{ color: "white", textAlign: "center" }, props.tstyle]}>
         {props.content}
       </Text>
     </Pressable>

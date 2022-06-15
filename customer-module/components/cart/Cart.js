@@ -1,8 +1,22 @@
-import { StyleSheet, Text, View, Modal, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import React from "react";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
-import { primaryColor } from "../../styles/styles";
+import styles, {
+  primaryColor,
+  secondaryColor,
+  accentColor,
+} from "../../styles/styles";
+import CustomButton from "../common/CustomButtom.js";
+import CartItem from "./CartItem";
 
 const Cart = (props) => {
   return (
@@ -18,12 +32,42 @@ const Cart = (props) => {
         <View style={styles.modalView}>
           <View style={styles.modalTitleContainer}>
             <Text style={styles.modalTitle}>Cart</Text>
-            <AntDesign name="close" size={24} color="white" />
+            <Pressable onPress={() => props.setVisible(false)}>
+              <AntDesign name="close" size={24} color="white" />
+            </Pressable>
           </View>
-          <View style={styles.modalContent}>
-            <Text>Item 1</Text>
-            <Text>Item 2</Text>
-            <Text>Item 3</Text>
+          <ScrollView
+            contentContainerStyle={{ padding: 10 }}
+            style={styles.modalContent}
+          >
+            <Text style={{ marginBottom: 10, fontWeight: "bold" }}>
+              Table Number #1
+            </Text>
+            <CartItem />
+            <CartItem />
+            <CartItem />
+            <View style={styles.hr}></View>
+            <Text style={{ marginVertical: 10, fontWeight: "bold" }}>
+              Payment method
+            </Text>
+            <View style={cartStyles.deliveryContainer}>
+              <Ionicons name="cash-sharp" size={24} color={secondaryColor} />
+              <Text style={cartStyles.deliveryText}>Cash on delivery</Text>
+            </View>
+          </ScrollView>
+          <View style={styles.modalButtonContainer}>
+            <View style={cartStyles.total}>
+              <Text style={cartStyles.totalText}>Total</Text>
+              <Text style={cartStyles.totalText}>RM 10.99</Text>
+            </View>
+            <CustomButton
+              cstyle={styles.modalButton}
+              tstyle={styles.modalButtonText}
+              content="Place Order"
+              callback={() => {
+                props.setVisible(false);
+              }}
+            />
           </View>
         </View>
       </View>
@@ -31,40 +75,25 @@ const Cart = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  modalBackground: {
-    flex: 1,
+const cartStyles = StyleSheet.create({
+  deliveryContainer: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
-  modalView: {
-    width: "80%",
+    padding: 10,
     borderRadius: 12,
-    overflow: "hidden",
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    backgroundColor: `${accentColor}`,
   },
-  modalTitleContainer: {
+  deliveryText: {
+    marginLeft: 10,
+    color: `${secondaryColor}`,
+  },
+  total: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 20,
-    backgroundColor: `${primaryColor}`,
+    width: "100%",
   },
-  modalTitle: {
-    fontSize: 18,
+  totalText: {
     fontWeight: "bold",
-    color: "white",
-  },  
-  modalContent: {
-    padding: 20,
   },
 });
 

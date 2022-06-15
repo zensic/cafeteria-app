@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   foodBannerImage: {
-    height: 200,
+    height: 150,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -85,7 +85,60 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 12,
     backgroundColor: accentColor,
-  }
+  },
+  modalBackground: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    width: "95%",
+    height: "80%",
+    borderRadius: 12,
+    overflow: "hidden",
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalTitleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
+    backgroundColor: `${primaryColor}`,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+  },
+  modalContent: {
+    flex: 1,
+  },
+  modalButtonContainer: {
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  modalButton: {
+    width: "100%",
+    marginVertical: 10,
+    padding: 10,
+    borderRadius: 12,
+    backgroundColor: `${primaryColor}`,
+  },
+  modalButtonText: {
+    fontWeight: "bold",
+  },
+  hr: {
+    borderBottomWidth: 1,
+    borderBottomColor: `${primaryColor}`,
+  },
 });
 
 export { primaryColor, secondaryColor, accentColor};
