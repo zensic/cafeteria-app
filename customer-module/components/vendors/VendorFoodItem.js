@@ -3,10 +3,15 @@ import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
 import styles from "../../styles/styles";
+import VendorFoodModal from "./VendorFoodModal";
 
 const VendorFoodItem = (props) => {
+
+  const [visible, setVisible] = React.useState(false);
+
   return (
-    <Pressable style={styles.foodItemContainer}>
+    <Pressable onPress={() => setVisible(true)} style={styles.foodItemContainer}>
+      <VendorFoodModal visible={visible} setVisible={setVisible}/>
       <ImageBackground
         style={styles.foodItemImage}
         source={require("../../assets/images/food-2.jpg")}

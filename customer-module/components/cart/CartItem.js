@@ -2,11 +2,12 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 import styles, { primaryColor } from "../../styles/styles";
+import Hr from "../common/Hr";
 
 const CartItem = (props) => {
   return (
     <>
-      <View style={styles.hr}></View>
+      <Hr />
       <Pressable style={cartItemStyles.container}>
         <Text style={cartItemStyles.quantity}>1x</Text>
         <Image

@@ -17,6 +17,7 @@ import styles, {
 } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom.js";
 import CartItem from "./CartItem";
+import Hr from "../common/Hr";
 
 const Cart = (props) => {
   return (
@@ -46,7 +47,7 @@ const Cart = (props) => {
             <CartItem />
             <CartItem />
             <CartItem />
-            <View style={styles.hr}></View>
+            <Hr />
             <Text style={{ marginVertical: 10, fontWeight: "bold" }}>
               Payment method
             </Text>
@@ -55,7 +56,9 @@ const Cart = (props) => {
               <Text style={cartStyles.deliveryText}>Cash on delivery</Text>
             </View>
           </ScrollView>
-          <View style={styles.modalButtonContainer}>
+          <View
+            style={[styles.modalButtonContainer, cartStyles.totalContainer]}
+          >
             <View style={cartStyles.total}>
               <Text style={cartStyles.totalText}>Total</Text>
               <Text style={cartStyles.totalText}>RM 10.99</Text>
@@ -91,9 +94,14 @@ const cartStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
+    marginBottom: 10,
+  },
+  totalContainer: {
+    backgroundColor: `${secondaryColor}`,
   },
   totalText: {
     fontWeight: "bold",
+    color: "white",
   },
 });
 

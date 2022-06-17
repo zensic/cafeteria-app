@@ -89,12 +89,12 @@ const styles = StyleSheet.create({
   modalBackground: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalView: {
-    width: "95%",
-    height: "80%",
+    height: "75%",
+    width: "100%",
     borderRadius: 12,
     overflow: "hidden",
     backgroundColor: "white",
@@ -123,11 +123,10 @@ const styles = StyleSheet.create({
   },
   modalButtonContainer: {
     alignItems: "center",
-    paddingHorizontal: 10,
+    padding: 10,
   },
   modalButton: {
     width: "100%",
-    marginVertical: 10,
     padding: 10,
     borderRadius: 12,
     backgroundColor: `${primaryColor}`,
