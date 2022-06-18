@@ -56,7 +56,6 @@ const ProfileDetails = ({ navigation }) => {
             <Text style={{ marginTop: 5 }}>08:30 - 23:00</Text>
           </View>
         </View>
-
         <CustomButton
           callback={handleEdit}
           content={"Edit Details"}

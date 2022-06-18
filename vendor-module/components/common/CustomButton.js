@@ -1,5 +1,5 @@
-import { View, Text, Pressable } from 'react-native'
-import React from 'react'
+import { View, Text, Pressable } from "react-native";
+import React from "react";
 
 const CustomButton = (props) => {
   return (
@@ -9,11 +9,11 @@ const CustomButton = (props) => {
         props.callback();
       }}
     >
-      <View>
-        <Text style={{ color: "white", textAlign: "center" }}>{props.content}</Text>
-      </View>
+      <Text style={{ color: "white", textAlign: "center" }}>
+        {props.content}
+      </Text>
     </Pressable>
-  )
-}
+  );
+};
 
-export default CustomButton
+export default CustomButton;
