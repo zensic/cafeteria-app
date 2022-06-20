@@ -1,28 +1,50 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import CenterWrapper from "../common/CenterWrapper";
 
-const Profile = () => {
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
+import styles from "../../styles/styles";
+import CenterWrapper from "../common/CenterWrapper.js";
+import CustomButton from "../common/CustomButtom.js";
+
+const Profile = ({navigation}) => {
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out sucessful
+        navigation.replace("login");
+      })
+      .catch((error) => {
+        // An error happened
+        alert(error.message);
+      });
+  };
+
   return (
     <CenterWrapper>
-      <View style={styles.imageContainer}>
+      <View style={profileStyles.imageContainer}>
         <Image
-          style={styles.image}
+          style={profileStyles.image}
           source={require("../../assets/images/profile-1.jpg")}
         />
       </View>
-      <Text style={styles.name}>Average Joe</Text>
-      <Text style={styles.label}>Email</Text>
-      <Text style={styles.field}>joe@mail.com</Text>
-      <Text style={styles.label}>Password</Text>
-      <Text style={styles.field}>******</Text>
-      <Text style={styles.label}>Mobile Number</Text>
-      <Text style={styles.field}>60123456789</Text>
+      <Text style={profileStyles.name}>Average Joe</Text>
+      <Text style={profileStyles.label}>Email</Text>
+      <Text style={profileStyles.field}>joe@mail.com</Text>
+      <Text style={profileStyles.label}>Password</Text>
+      <Text style={profileStyles.field}>******</Text>
+      <Text style={profileStyles.label}>Mobile Number</Text>
+      <Text style={profileStyles.field}>60123456789</Text>
+      <CustomButton
+        callback={handleSignOut}
+        content={"Sign Out"}
+        cstyle={styles.buttonSecondary}
+      />
     </CenterWrapper>
   );
 };
 
-const styles = StyleSheet.create({
+const profileStyles = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
     marginTop: 10,
