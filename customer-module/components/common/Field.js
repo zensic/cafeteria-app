@@ -1,19 +1,14 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import React from "react";
 
-import { primaryColor, accentColor } from "../../styles/styles";
+import { accentColor } from "../../styles/styles";
 
 const Field = (props) => {
   return (
-    <View style={styles.field}>
-      <Text style={{ fontWeight: "bold" }}>{props.label}</Text>
+    <View style={fieldStyles.field}>
+      <Text style={fieldStyles.label}>{props.label}</Text>
       <TextInput
-        style={{
-          height: 40,
-          padding: 10,
-          backgroundColor: `${accentColor}`,
-          borderRadius: 12
-        }}
+        style={fieldStyles.input}
         placeholder={props.placeholder}
         value={props.value}
         secureTextEntry={props.secure ? true : false}
@@ -25,9 +20,19 @@ const Field = (props) => {
 
 export default Field;
 
-const styles = StyleSheet.create({
+const fieldStyles = StyleSheet.create({
   field: {
     width: "100%",
     marginTop: 10,
   },
+  label: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  input: {
+    marginTop: 5,
+    padding: 10,
+    backgroundColor: `${accentColor}`,
+    borderRadius: 12
+  }
 });

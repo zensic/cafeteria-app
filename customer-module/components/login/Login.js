@@ -29,12 +29,13 @@ const Login = () => {
   });
 
   const handleSignUp = () => {
-    fbSignUp(email, password);
+    setLoading(true);
+    fbSignUp(email, password, setLoading);
   };
 
   const handleLogin = () => {
     setLoading(true);
-    fbSignIn(email, password);
+    fbSignIn(email, password, setLoading);
   };
 
   return (
@@ -42,7 +43,7 @@ const Login = () => {
       source={require("../../assets/images/login-1.jpg")}
       style={loginStyle.loginLayout}
     >
-      <LoadingScreen visible={loading}/>
+      <LoadingScreen visible={loading} />
       <View style={loginStyle.loginContainer}>
         <Field
           label={"Username"}
@@ -83,7 +84,7 @@ const loginStyle = StyleSheet.create({
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     padding: 16,
     borderRadius: 12,
-  }
+  },
 });
 
 export default Login;
