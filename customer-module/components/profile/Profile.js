@@ -1,13 +1,16 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
-import styles from "../../styles/styles";
+import styles, {primaryColor} from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper.js";
 import CustomButton from "../common/CustomButtom.js";
+import Hr from "../common/Hr.js";
 
-const Profile = ({navigation}) => {
+const Profile = ({ navigation }) => {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -27,14 +30,29 @@ const Profile = ({navigation}) => {
           style={profileStyles.image}
           source={require("../../assets/images/profile-1.jpg")}
         />
+        <View style={profileStyles.nameContainer}>
+          <Text style={profileStyles.name}>Average Joe</Text>
+          <Text style={profileStyles.field}>joe@mail.com</Text>
+        </View>
       </View>
-      <Text style={profileStyles.name}>Average Joe</Text>
-      <Text style={profileStyles.label}>Email</Text>
-      <Text style={profileStyles.field}>joe@mail.com</Text>
-      <Text style={profileStyles.label}>Password</Text>
-      <Text style={profileStyles.field}>******</Text>
-      <Text style={profileStyles.label}>Mobile Number</Text>
-      <Text style={profileStyles.field}>60123456789</Text>
+      <Hr />
+      <View style={profileStyles.propertyContainer}>
+        <FontAwesome5 name="key" size={24} color="black" />
+        <View style={profileStyles.property}>
+          <Text style={profileStyles.label}>Password</Text>
+          <Text style={profileStyles.field}>******</Text>
+        </View>
+      </View>
+      <View style={profileStyles.propertyContainer}>
+        <Entypo name="phone" size={24} color="black" />
+        <View style={profileStyles.property}>
+          <Text style={profileStyles.label}>Mobile Number</Text>
+          <Text style={profileStyles.field}>60123456789</Text>
+        </View>
+      </View>
+      <CustomButton
+        
+      />
       <CustomButton
         callback={handleSignOut}
         content={"Sign Out"}
@@ -46,27 +64,38 @@ const Profile = ({navigation}) => {
 
 const profileStyles = StyleSheet.create({
   imageContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  image: {
+    height: 100,
+    width: 100,
+    borderRadius: 100,
+  },
+  nameContainer: {
+    marginLeft: 20,
+  },
+  name: {
+    fontWeight: "bold",
+    fontSize: 24,
+    color: `${primaryColor}`,
+  },
+  propertyContainer: {
+    flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
   },
-  image: {
-    height: 200,
-    width: 200,
-    borderRadius: 100,
-  },
-  name: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 24,
+  property: {
+    marginLeft: 10,
   },
   label: {
     // fontSize: 18,
     // fontWeight: "bold",
-    marginTop: 10,
   },
   field: {
     // fontSize: 18,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
 });
 
