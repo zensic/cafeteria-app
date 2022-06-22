@@ -34,7 +34,6 @@ const fbSignUp = (email, password, callback) => {
 
       // If a callback function is provided, call it
       if (callback !== undefined) {
-        console.log("callback");
         callback(false);
       }
     });
@@ -52,7 +51,6 @@ const fbSignIn = (email, password, callback) => {
 
       // If a callback function is provided, call it
       if (callback !== undefined) {
-        console.log("callback");
         callback(false);
       }
     });

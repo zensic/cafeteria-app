@@ -10,6 +10,10 @@ const FoodCreate = ({ navigation }) => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
 
+  const handleCreate = () => {
+    
+  }
+
   const handleCancel = () => {
     navigation.navigate("Food Listing");
   };
@@ -37,7 +41,11 @@ const FoodCreate = ({ navigation }) => {
           placeholder={"Enter your price here"}
           callback={setPrice}
         />
-        <CustomButton content={"Confirm"} cstyle={styles.button} />
+        <CustomButton
+          callback={handleCreate}
+          content={"Confirm"}
+          cstyle={styles.button}
+        />
         <CustomButton
           callback={handleCancel}
           content={"Cancel"}

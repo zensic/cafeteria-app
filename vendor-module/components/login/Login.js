@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import { View, Text, StyleSheet, ImageBackground, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -29,11 +29,14 @@ const Login = () => {
   });
 
   const handleSignUp = () => {
+    setLoading(true);
+    Keyboard.dismiss();
     fbSignUp(email, password, setLoading);
   };
 
   const handleLogin = () => {
     setLoading(true);
+    Keyboard.dismiss();
     fbSignIn(email, password, setLoading);
   };
 

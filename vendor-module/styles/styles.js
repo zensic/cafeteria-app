@@ -68,8 +68,10 @@ const styles = StyleSheet.create({
   },
   foodItemButton: {
     backgroundColor: `${secondaryColor}`,
+    width: 60,
     marginRight: 5,
-    padding: 5
+    padding: 5,
+    borderRadius: 12,
   },
   foodItemStar: {
     padding: 5,
