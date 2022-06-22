@@ -22,22 +22,40 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth();
 
-const fbSignUp = (email, password) => {
+const fbSignUp = (email, password, callback) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log(`${user.email} successfully registered`);
     })
-    .catch((error) => alert(error.message));
+    .catch((error) => {
+      // Alert the error message
+      alert(error.message);
+
+      // If a callback function is provided, call it
+      if (callback !== undefined) {
+        console.log("callback");
+        callback(false);
+      }
+    });
 };
 
-const fbSignIn = (email, password) => {
+const fbSignIn = (email, password, callback) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log(`${user.email} has signed in`);
     })
-    .catch((error) => alert(error.message));
+    .catch((error) => {
+      // Alert the error message
+      alert(error.message);
+
+      // If a callback function is provided, call it
+      if (callback !== undefined) {
+        console.log("callback");
+        callback(false);
+      }
+    });
 };
 
 export { auth, fbSignUp, fbSignIn };

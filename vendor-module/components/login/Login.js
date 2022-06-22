@@ -29,12 +29,12 @@ const Login = () => {
   });
 
   const handleSignUp = () => {
-    fbSignUp(email, password);
+    fbSignUp(email, password, setLoading);
   };
 
   const handleLogin = () => {
     setLoading(true);
-    fbSignIn(email, password);
+    fbSignIn(email, password, setLoading);
   };
 
   return (

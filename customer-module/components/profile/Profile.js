@@ -1,14 +1,12 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
 
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
-import styles, {primaryColor} from "../../styles/styles";
+import styles, { primaryColor } from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper.js";
 import CustomButton from "../common/CustomButtom.js";
-import Hr from "../common/Hr.js";
 
 const Profile = ({ navigation }) => {
   const handleSignOut = () => {
@@ -24,62 +22,68 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <CenterWrapper>
+    <>
       <View style={profileStyles.imageContainer}>
         <Image
           style={profileStyles.image}
           source={require("../../assets/images/profile-1.jpg")}
         />
-        <View style={profileStyles.nameContainer}>
-          <Text style={profileStyles.name}>Average Joe</Text>
-          <Text style={profileStyles.field}>joe@mail.com</Text>
-        </View>
+        <Text style={profileStyles.name}>Average Joe</Text>
       </View>
-      <Hr />
-      <View style={profileStyles.propertyContainer}>
-        <FontAwesome5 name="key" size={24} color="black" />
-        <View style={profileStyles.property}>
-          <Text style={profileStyles.label}>Password</Text>
-          <Text style={profileStyles.field}>******</Text>
+      <CenterWrapper>
+        <View style={profileStyles.propertyContainer}>
+          <MaterialIcons name="email" size={24} color="black" />
+          <View style={profileStyles.property}>
+            <Text style={profileStyles.label}>Email</Text>
+            <Text style={profileStyles.field}>joe@mail.com</Text>
+          </View>
         </View>
-      </View>
-      <View style={profileStyles.propertyContainer}>
-        <Entypo name="phone" size={24} color="black" />
-        <View style={profileStyles.property}>
-          <Text style={profileStyles.label}>Mobile Number</Text>
-          <Text style={profileStyles.field}>60123456789</Text>
+        <View style={profileStyles.propertyContainer}>
+          <Ionicons name="key" size={24} color="black" />
+          <View style={profileStyles.property}>
+            <Text style={profileStyles.label}>Password</Text>
+            <Text style={profileStyles.field}>******</Text>
+          </View>
         </View>
-      </View>
-      <CustomButton
-        
-      />
-      <CustomButton
-        callback={handleSignOut}
-        content={"Sign Out"}
-        cstyle={styles.buttonSecondary}
-      />
-    </CenterWrapper>
+        <View style={[profileStyles.propertyContainer, {marginBottom: 15}]}>
+          <Entypo name="phone" size={24} color="black" />
+          <View style={profileStyles.property}>
+            <Text style={profileStyles.label}>Mobile Number</Text>
+            <Text style={profileStyles.field}>60123456789</Text>
+          </View>
+        </View>
+        <CustomButton 
+          content={"Edit"}
+          cstyle={styles.button}
+        />
+        <CustomButton
+          callback={handleSignOut}
+          content={"Sign Out"}
+          cstyle={styles.buttonSecondary}
+        />
+      </CenterWrapper>
+    </>
   );
 };
 
 const profileStyles = StyleSheet.create({
   imageContainer: {
-    flexDirection: "row",
     alignItems: "center",
-    marginVertical: 10,
+    padding: 20,
+    marginBottom: 10,
+    backgroundColor: `${primaryColor}`,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
   image: {
-    height: 100,
-    width: 100,
+    height: 150,
+    width: 150,
     borderRadius: 100,
-  },
-  nameContainer: {
-    marginLeft: 20,
   },
   name: {
     fontWeight: "bold",
     fontSize: 24,
-    color: `${primaryColor}`,
+    color: "white",
   },
   propertyContainer: {
     flexDirection: "row",
