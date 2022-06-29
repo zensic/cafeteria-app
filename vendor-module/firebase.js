@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,6 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase, check whether FireBase has been init
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth();
+const db = getFirestore(app);
 
 const fbSignUp = (email, password, callback) => {
   createUserWithEmailAndPassword(auth, email, password)
@@ -56,4 +58,4 @@ const fbSignIn = (email, password, callback) => {
     });
 };
 
-export { auth, fbSignUp, fbSignIn };
+export { auth, db, fbSignUp, fbSignIn };

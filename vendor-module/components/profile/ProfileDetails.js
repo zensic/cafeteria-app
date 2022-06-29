@@ -1,12 +1,10 @@
 import React from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
-import { Entypo } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 
-import styles from "../../styles/styles";
-import { primaryColor } from "../../styles/styles";
+import styles, { primaryColor } from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 

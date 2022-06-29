@@ -14,16 +14,38 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 5,
     backgroundColor: `${primaryColor}`,
     borderRadius: 12,
   },
   buttonSecondary: {
     width: "100%",
     paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 5,
     backgroundColor: `${secondaryColor}`,
     borderRadius: 12,
+  },
+  field: {
+    width: "100%",
+  },
+  labelContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  label: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  labelError: {
+    color: 'red'
+  },
+  input: {
+    marginTop: 5,
+    padding: 10,
+    backgroundColor: `${accentColor}`,
+    borderRadius: 12
   },
   banner: {
     width: "100%",
@@ -48,7 +70,7 @@ const styles = StyleSheet.create({
   foodItemContainer: {
     borderRadius: 12,
     overflow: "hidden",
-    marginTop: 10,
+    marginTop: 5,
   },
   foodItemImage: {
     width: "100%",
@@ -88,7 +110,7 @@ const styles = StyleSheet.create({
   orderItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 10,
+    marginTop: 5,
     padding: 20,
     borderRadius: 12,
     backgroundColor: accentColor,

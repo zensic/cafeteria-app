@@ -1,18 +1,26 @@
-import { View, Text, Pressable, ImageBackground } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  ImageBackground,
+  TextInput,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
+import { Formik } from "formik";
+import * as yup from "yup";
+import { collection, addDoc } from "firebase/firestore";
 
+import { auth, db } from "../../firebase";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
-import Field from "../common/Field";
 import styles from "../../styles/styles.js";
 
 const FoodCreate = ({ navigation }) => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-
-  const handleCreate = () => {
-    
-  }
+  const foodSchema = yup.object({
+    name: yup.string().required(),
+    price: yup.number().required().positive(),
+  });
 
   const handleCancel = () => {
     navigation.navigate("Food Listing");
@@ -28,30 +36,66 @@ const FoodCreate = ({ navigation }) => {
           <Text style={styles.foodBannerImageText}>Upload Image</Text>
         </ImageBackground>
       </Pressable>
-      <CenterWrapper>
-        <Field
-          label={"Food Name"}
-          value={name}
-          placeholder={"Enter your name here"}
-          callback={setName}
-        />
-        <Field
-          label={"Food Price"}
-          value={price}
-          placeholder={"Enter your price here"}
-          callback={setPrice}
-        />
-        <CustomButton
-          callback={handleCreate}
-          content={"Confirm"}
-          cstyle={styles.button}
-        />
-        <CustomButton
-          callback={handleCancel}
-          content={"Cancel"}
-          cstyle={styles.buttonSecondary}
-        />
-      </CenterWrapper>
+      <Formik
+        initialValues={{ name: "", price: "" }}
+        validationSchema={foodSchema}
+        onSubmit={async (values) => {
+          Keyboard.dismiss();
+
+          const docRef = await addDoc(collection(db, "food"), {
+            name: values.name,
+            price: values.price,
+            url: "placeholder.com",
+            email: auth.currentUser.email,
+          });
+          
+          alert(`Document written with ID: ${docRef.id}`);
+        }}
+      >
+        {(props) => (
+          <CenterWrapper>
+            <View style={styles.labelContainer}>
+              <Text style={styles.label}>Food Name</Text>
+              <Text style={styles.labelError}>
+                {props.touched.name && props.errors.name}
+              </Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your food name here"
+              value={props.values.name}
+              onChangeText={props.handleChange("name")}
+              onBlue={props.handleBlur("name")}
+            />
+
+            <View style={styles.labelContainer}>
+              <Text style={styles.label}>Food Price</Text>
+              <Text style={styles.labelError}>
+                {props.touched.price && props.errors.price}
+              </Text>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your food price here"
+              keyboardType="numeric"
+              value={props.values.price}
+              onChangeText={props.handleChange("price")}
+              onBlue={props.handleBlur("price")}
+            />
+
+            <CustomButton
+              content={"Confirm"}
+              cstyle={styles.button}
+              callback={props.handleSubmit}
+            />
+            <CustomButton
+              content={"Cancel"}
+              cstyle={styles.buttonSecondary}
+              callback={handleCancel}
+            />
+          </CenterWrapper>
+        )}
+      </Formik>
     </View>
   );
 };

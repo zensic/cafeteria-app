@@ -14,14 +14,14 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 5,
     backgroundColor: `${primaryColor}`,
     borderRadius: 12,
   },
   buttonSecondary: {
     width: "100%",
     paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 5,
     backgroundColor: `${secondaryColor}`,
     borderRadius: 12,
   },
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   foodItemContainer: {
     borderRadius: 12,
     overflow: "hidden",
-    marginTop: 10,
+    marginTop: 5,
   },
   foodItemImage: {
     width: "100%",
