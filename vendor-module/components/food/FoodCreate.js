@@ -11,6 +11,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import * as ImagePicker from 'expo-image-picker';
 import { collection, addDoc } from "firebase/firestore";
+import { uploadBytes, ref } from "firebase/storage";
 
 import { auth, db, storage } from "../../firebase";
 import CenterWrapper from "../common/CenterWrapper";
@@ -46,8 +47,7 @@ const FoodCreate = ({ navigation }) => {
       return;
     }
 
-    setFoodImage({ localUri: pickerResult.uri });
-    console.log(pickerResult);
+    setFoodImage(pickerResult);
   }
 
   return (
@@ -55,7 +55,7 @@ const FoodCreate = ({ navigation }) => {
       <Pressable onPress={handleUpload}>
         <ImageBackground
           style={styles.foodBannerImage}
-          source={foodImage ? {uri: foodImage.localUri} : require("../../assets/images/upload-food.jpg")}
+          source={foodImage ? {uri: foodImage.uri} : require("../../assets/images/upload-food.jpg")}
         >
           <Text style={styles.foodBannerImageText}>Upload Image</Text>
         </ImageBackground>
@@ -66,12 +66,28 @@ const FoodCreate = ({ navigation }) => {
         onSubmit={async (values) => {
           Keyboard.dismiss();
 
+          // TODO: link image url ref properly
+          // Use v4 lib maybe
           const docRef = await addDoc(collection(db, "food"), {
             name: values.name,
             price: values.price,
             url: "placeholder.com",
             email: auth.currentUser.email,
           });
+
+          console.log(foodImage);
+
+          // upload data to firebase
+          if (foodImage) {
+            const refence = ref(storage, `images/${auth.currentUser.email}/food`);
+
+            // TODO: name variable properly
+            // convert image to array of bytes
+            const image2 = await fetch(foodImage.uri);
+            const bytes = await image2.blob();
+
+            await uploadBytes(refence, bytes);
+          }
           
           alert(`Document written with ID: ${docRef.id}`);
         }}

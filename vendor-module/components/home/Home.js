@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 
@@ -66,5 +65,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({});
