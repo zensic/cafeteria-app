@@ -30,7 +30,7 @@ const FoodItem = (props) => {
     >
       <ImageBackground
         style={styles.foodItemImage}
-        source={require("../../assets/images/upload-food.jpg")}
+        source={props.url}
       >
         <View style={styles.foodItemImageContainer}>
           <Text
