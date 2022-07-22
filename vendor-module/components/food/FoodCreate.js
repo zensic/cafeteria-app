@@ -94,7 +94,7 @@ const FoodCreate = ({ navigation }) => {
           const docRef = await addDoc(collection(db, "food"), {
             name: values.name,
             price: values.price,
-            url: `${auth.currentUser.email}/${imageName}`,
+            url: `images/${auth.currentUser.email}/${imageName}`,
             email: auth.currentUser.email,
           });
 

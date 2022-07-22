@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "../../styles/styles.js";
 import CustomButton from "../common/CustomButton";
@@ -6,7 +6,32 @@ import FoodItem from "./FoodItem.js";
 import CenterWrapper from "../common/CenterWrapper.js";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { auth, db, storage } from "../../firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 const FoodListing = ({ navigation }) => {
+
+  const [foodList, setFoodList] = useState([]);
+
+  useEffect(() => {
+    console.log("Use Effect Called");
+    getFoodList();
+  }, []);
+
+  const getFoodList = async () => {
+    const querySnapshot = await getDocs(collection(db, "food"));
+    const foodTemp = [];
+    querySnapshot.forEach((doc) => {
+      //console.log(doc.data());
+      //console.log(doc.id, " => ", doc.data());
+      foodTemp.push([doc.id, doc.data()]);
+    });
+    setFoodList(foodTemp);
+    console.log(foodList);
+  }
+
   const handleCreateFood = () => {
     navigation.navigate("Food Creation");
   };
@@ -19,12 +44,12 @@ const FoodListing = ({ navigation }) => {
           content={"Create New Food"}
           cstyle={styles.button}
         />
-        {data.food.map((foodItem) => (
+        {foodList.map((foodItem) => (
           <FoodItem
-            key={foodItem.id}
-            image={foodItem.url}
-            foodName={foodItem.name}
-            foodPrice={foodItem.price.toFixed(2)}
+            key={foodItem[0]}
+            image={foodItem[1].url}
+            foodName={foodItem[1].name}
+            foodPrice={foodItem[1].price}
           />
         ))}
       </ScrollView>
