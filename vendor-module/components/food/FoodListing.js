@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { auth, db, storage } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const FoodListing = ({ navigation }) => {
@@ -21,7 +21,14 @@ const FoodListing = ({ navigation }) => {
   }, []);
 
   const getFoodList = async () => {
-    const querySnapshot = await getDocs(collection(db, "food"));
+    console.log("break 1");
+    const collectionRef = collection(db, "food");
+    console.log("break 2");
+    const queryRef = query(collectionRef, where("email", "==", auth.currentUser.email));
+    console.log("break 3");
+    const querySnapshot = await getDocs(queryRef);
+    console.log("break 4");
+
     const foodTemp = [];
     querySnapshot.forEach((doc) => {
       //console.log(doc.data());
