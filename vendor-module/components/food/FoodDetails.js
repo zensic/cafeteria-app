@@ -5,13 +5,17 @@ import CenterWrapper from '../common/CenterWrapper'
 
 const FoodDetails = ({route}) => {
 
-  const {foodName, foodPrice} = route.params;
+  const {foodName, foodPrice, foodUrl} = route.params;
 
   return (
     <View>
       <Image
         style={styles.foodBannerImage}
-        source={require("../../assets/images/upload-food.jpg")}
+        source={
+          foodUrl
+              ? { uri: foodUrl }
+              : require("../../assets/images/upload-food.jpg")
+          }
       />
       <CenterWrapper>
         <Text>{foodName}</Text>

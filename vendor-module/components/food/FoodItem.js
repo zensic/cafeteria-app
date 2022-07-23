@@ -2,7 +2,7 @@ import { View, Text, Pressable, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { ref, getDownloadURL } from "firebase/storage";
 
 import { storage } from "../../firebase";
 import styles from "../../styles/styles";
@@ -12,12 +12,21 @@ const FoodItem = (props) => {
   const nav = useNavigation();
   const [imageUrl, setImageUrl] = useState("");
 
-  const handleViewFood = (name, price) => {
-    nav.navigate("Food Details", { foodName: name, foodPrice: price });
+  const handleViewFood = () => {
+    nav.navigate("Food Details", {
+      foodName: props.foodName,
+      foodPrice: props.foodPrice,
+      foodUrl: imageUrl,
+    });
   };
 
   const handleEditFood = () => {
-    nav.navigate("Food Edit");
+    nav.navigate("Food Edit", {
+      foodId: props.foodId,
+      foodName: props.foodName,
+      foodPrice: props.foodPrice,
+      foodUrl: imageUrl,
+    });
   };
 
   const handleDeleteFood = () => {};
@@ -25,14 +34,14 @@ const FoodItem = (props) => {
   useEffect(() => {
     getDownloadURL(ref(storage, props.url))
       .then((url) => setImageUrl(url))
-      .catch((error => console.log(error)));
+      .catch((error) => console.log(error));
   }, []);
 
   return (
     <Pressable
       style={styles.foodItemContainer}
       onPress={() => {
-        handleViewFood(props.foodName, props.foodPrice);
+        handleViewFood();
       }}
     >
       <ImageBackground

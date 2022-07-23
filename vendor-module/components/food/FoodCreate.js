@@ -22,11 +22,6 @@ import styles from "../../styles/styles.js";
 const FoodCreate = ({ navigation }) => {
   const [foodImage, setFoodImage] = useState(null);
 
-  const foodSchema = yup.object({
-    name: yup.string().required(),
-    price: yup.number().required().positive(),
-  });
-
   const handleCancel = () => {
     navigation.navigate("Food Listing");
   };
@@ -51,6 +46,19 @@ const FoodCreate = ({ navigation }) => {
     setFoodImage(pickerResult);
   };
 
+  const foodSchema = yup.object({
+    name: yup.string()
+      .required(),
+    price: yup.number()
+      .required()
+      .positive()
+      .test(
+        "maxDigitsAfterDecimal",
+        "Please use 2 decimal places only",
+        (number) => /^\d+(\.\d{1,2})?$/.test(number)
+      ),
+  });
+
   return (
     <View>
       <Pressable onPress={handleUpload}>
@@ -74,19 +82,17 @@ const FoodCreate = ({ navigation }) => {
           // Generate uuid
           let imageName = uuid.v4();
 
-          // Upload image to firebase
+          // Upload image to firebase if image exists
           if (foodImage) {
             const refence = ref(
               storage,
               `images/${auth.currentUser.email}/${imageName}`
             );
-
             const imageFile = await fetch(foodImage.uri);
             const bytes = await imageFile.blob();
 
             await uploadBytes(refence, bytes);
           }
-
           const docRef = await addDoc(collection(db, "food"), {
             name: values.name,
             price: values.price,
@@ -111,7 +117,7 @@ const FoodCreate = ({ navigation }) => {
               placeholder="Enter your food name here"
               value={props.values.name}
               onChangeText={props.handleChange("name")}
-              onBlue={props.handleBlur("name")}
+              onBlur={props.handleBlur("name")}
             />
 
             <View style={styles.labelContainer}>
@@ -126,7 +132,7 @@ const FoodCreate = ({ navigation }) => {
               keyboardType="numeric"
               value={props.values.price}
               onChangeText={props.handleChange("price")}
-              onBlue={props.handleBlur("price")}
+              onBlur={props.handleBlur("price")}
             />
 
             <View style={{ marginTop: 5 }}>

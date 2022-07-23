@@ -48,6 +48,7 @@ const FoodListing = ({ navigation }) => {
           <FoodItem
             key={foodItem[0]}
             url={foodItem[1]}
+            foodId={foodItem[0]}
             foodName={foodItem[2]}
             foodPrice={foodItem[3]}
           />
