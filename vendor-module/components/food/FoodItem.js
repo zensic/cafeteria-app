@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { ref, getDownloadURL } from "firebase/storage";
+import { doc, deleteDoc } from "firebase/firestore";
 
-import { storage } from "../../firebase";
+import { db, storage } from "../../firebase";
 import styles from "../../styles/styles";
 import CustomButton from "../common/CustomButton";
 
@@ -29,7 +30,11 @@ const FoodItem = (props) => {
     });
   };
 
-  const handleDeleteFood = () => {};
+  const handleDeleteFood = async () => {
+    await deleteDoc(doc(db, "food", props.foodId));
+    alert(`Deleted ${props.foodName}!`);
+    nav.navigate("Orders");
+  };
 
   useEffect(() => {
     getDownloadURL(ref(storage, props.url))
