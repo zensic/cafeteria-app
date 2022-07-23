@@ -6,41 +6,34 @@ import FoodItem from "./FoodItem.js";
 import CenterWrapper from "../common/CenterWrapper.js";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { auth, db, storage } from "../../firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { useIsFocused } from "@react-navigation/native";
+
 
 const FoodListing = ({ navigation }) => {
 
-  const [foodList, setFoodList] = useState([]);
+  const [foodList, setFoodList] = useState(() => []);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    console.log("Use Effect Called");
     getFoodList();
-  }, []);
+  }, [isFocused]);
 
   const getFoodList = async () => {
-    console.log("break 1");
     const collectionRef = collection(db, "food");
-    console.log("break 2");
     const queryRef = query(collectionRef, where("email", "==", auth.currentUser.email));
-    console.log("break 3");
     const querySnapshot = await getDocs(queryRef);
-    console.log("break 4");
 
-    const foodTemp = [];
+    let foodTemp = [];
     querySnapshot.forEach((doc) => {
-      //console.log(doc.data());
-      //console.log(doc.id, " => ", doc.data());
-      foodTemp.push([doc.id, doc.data()]);
+      foodTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().price]);
     });
     setFoodList(foodTemp);
-    console.log(foodList);
   }
 
   const handleCreateFood = () => {
-    navigation.navigate("Food Creation");
+    navigation.push("Food Creation");
   };
 
   return (
@@ -54,9 +47,9 @@ const FoodListing = ({ navigation }) => {
         {foodList.map((foodItem) => (
           <FoodItem
             key={foodItem[0]}
-            image={foodItem[1].url}
-            foodName={foodItem[1].name}
-            foodPrice={foodItem[1].price}
+            url={foodItem[1]}
+            foodName={foodItem[2]}
+            foodPrice={foodItem[3]}
           />
         ))}
       </ScrollView>

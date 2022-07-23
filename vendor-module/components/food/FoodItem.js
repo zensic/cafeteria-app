@@ -1,25 +1,32 @@
 import { View, Text, Pressable, ImageBackground } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
+import { storage } from "../../firebase";
 import styles from "../../styles/styles";
 import CustomButton from "../common/CustomButton";
 
 const FoodItem = (props) => {
   const nav = useNavigation();
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleViewFood = (name, price) => {
     nav.navigate("Food Details", { foodName: name, foodPrice: price });
   };
 
   const handleEditFood = () => {
-    nav.navigate("Food Edit", );
-  }
+    nav.navigate("Food Edit");
+  };
 
-  const handleDeleteFood = () => {
-    
-  }
+  const handleDeleteFood = () => {};
+
+  useEffect(() => {
+    getDownloadURL(ref(storage, props.url))
+      .then((url) => setImageUrl(url))
+      .catch((error => console.log(error)));
+  }, []);
 
   return (
     <Pressable
@@ -30,12 +37,14 @@ const FoodItem = (props) => {
     >
       <ImageBackground
         style={styles.foodItemImage}
-        source={props.url}
+        source={
+          imageUrl
+            ? { uri: imageUrl }
+            : require("../../assets/images/upload-food.jpg")
+        }
       >
         <View style={styles.foodItemImageContainer}>
-          <Text
-            style={styles.foodItemStar}
-          >
+          <Text style={styles.foodItemStar}>
             4.4 <FontAwesome name="star" size={16} color="white" />
           </Text>
           <View style={{ flexDirection: "row" }}>

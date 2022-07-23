@@ -81,16 +81,12 @@ const FoodCreate = ({ navigation }) => {
               `images/${auth.currentUser.email}/${imageName}`
             );
 
-            // TODO: name variable properly
-            // convert image to array of bytes
             const imageFile = await fetch(foodImage.uri);
             const bytes = await imageFile.blob();
 
             await uploadBytes(refence, bytes);
           }
 
-          // TODO: link image url ref properly
-          // Use v4 lib maybe
           const docRef = await addDoc(collection(db, "food"), {
             name: values.name,
             price: values.price,
@@ -99,6 +95,7 @@ const FoodCreate = ({ navigation }) => {
           });
 
           alert(`Document written with ID: ${docRef.id}`);
+          navigation.goBack()
         }}
       >
         {(props) => (
