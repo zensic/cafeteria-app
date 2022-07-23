@@ -24,10 +24,9 @@ const FoodEdit = ({ route, navigation }) => {
 
   const [name, setName] = useState(foodName);
   const [price, setPrice] = useState(foodPrice);
-  const [imageUrl, setImageUrl] = useState(foodUrl);
 
   // New food image
-  const [foodImage, setFoodImage] = useState(null);
+  const [foodImage, setFoodImage] = useState({uri: foodUrl});
 
   const handleCancel = () => {
     navigation.navigate("Food Listing");
@@ -69,14 +68,7 @@ const FoodEdit = ({ route, navigation }) => {
   return (
     <View>
       <Pressable onPress={handleUpload}>
-        <ImageBackground
-          style={styles.foodBannerImage}
-          source={
-            imageUrl
-              ? { uri: imageUrl }
-              : require("../../assets/images/upload-food.jpg")
-          }
-        >
+        <ImageBackground style={styles.foodBannerImage} source={{uri: foodImage.uri}}>
           <Text style={styles.foodBannerImageText}>Upload New Food Image</Text>
         </ImageBackground>
       </Pressable>
@@ -86,15 +78,14 @@ const FoodEdit = ({ route, navigation }) => {
         onSubmit={async (values) => {
           Keyboard.dismiss();
 
-          // Generate uuid
-          let imageName = uuid.v4();
+          // Use original if user doesn't upload
+          let imagePath = foodUrl;
 
           // Upload image to firebase if image exists
           if (foodImage) {
-            const refence = ref(
-              storage,
-              `images/${auth.currentUser.email}/${imageName}`
-            );
+            // Generate uuid
+            imagePath = `images/${auth.currentUser.email}/` + uuid.v4();
+            const refence = ref(storage, imagePath);
             const imageFile = await fetch(foodImage.uri);
             const bytes = await imageFile.blob();
 
@@ -105,7 +96,7 @@ const FoodEdit = ({ route, navigation }) => {
           await updateDoc(doc(db, "food", foodId), {
             name: values.name,
             price: values.price,
-            url: `images/${auth.currentUser.email}/${imageName}`,
+            url: imagePath,
             email: auth.currentUser.email,
           });
 
