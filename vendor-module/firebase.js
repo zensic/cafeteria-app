@@ -5,8 +5,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,14 +27,21 @@ const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-const fbSignUp = (email, password, callback) => {
-  createUserWithEmailAndPassword(auth, email, password)
+const fbSignUp = async (email, password, callback) => {
+  // Create a new account with email and password
+  // Assign the new account vendor group in FireStore
+  await createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+
+      // Create an entry in the firestore database
+      setDoc(doc(db, "userGroup", user.email), {
+        group: "vendor",
+      });
+
       console.log(`${user.email} successfully registered`);
     })
     .catch((error) => {
-      // Alert the error message
       alert(error.message);
 
       // If a callback function is provided, call it
@@ -43,14 +51,24 @@ const fbSignUp = (email, password, callback) => {
     });
 };
 
-const fbSignIn = (email, password, callback) => {
-  signInWithEmailAndPassword(auth, email, password)
+const fbSignIn = async (email, password, callback) => {
+  // Check if email in list of roles for firestore
+  const docSnap = await getDoc(doc(db, "userGroup", email));
+
+  if (!docSnap.exists() || docSnap.data().group != "vendor") {
+    callback(false);
+    alert("User doesn't exist!");
+
+    return 0;
+  }
+
+  // Check if email and password matches
+  await signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log(`${user.email} has signed in`);
     })
     .catch((error) => {
-      // Alert the error message
       alert(error.message);
 
       // If a callback function is provided, call it

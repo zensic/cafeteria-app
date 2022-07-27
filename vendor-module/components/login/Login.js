@@ -28,16 +28,18 @@ const Login = () => {
     });
   });
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     setLoading(true);
     Keyboard.dismiss();
-    fbSignUp(email, password, setLoading);
+
+    await fbSignUp(email, password, setLoading);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setLoading(true);
     Keyboard.dismiss();
-    fbSignIn(email, password, setLoading);
+    
+    await fbSignIn(email, password, setLoading);
   };
 
   return (
