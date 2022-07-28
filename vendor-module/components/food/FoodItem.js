@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { doc, deleteDoc } from "firebase/firestore";
 
-import { db, fbGetDownloadURL, storage } from "../../firebase";
+import { db, fbGetDownloadURL } from "../../firebase";
 import styles from "../../styles/styles";
 import CustomButton from "../common/CustomButton";
 
@@ -49,9 +49,9 @@ const FoodItem = (props) => {
       <ImageBackground
         style={styles.foodItemImage}
         source={
-          imageUrl
+          imageUrl != ""
             ? { uri: imageUrl }
-            : require("../../assets/images/upload-food.jpg")
+            : require("../../assets/images/no-image.jpg")
         }
       >
         <View style={styles.foodItemImageContainer}>

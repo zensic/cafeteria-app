@@ -11,13 +11,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import * as ImagePicker from "expo-image-picker";
 import { collection, addDoc } from "firebase/firestore";
-import uuid from "react-native-uuid";
 
-import { auth, db, storage, fbUploadImage } from "../../firebase";
+import { auth, db, fbUploadImage } from "../../firebase";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import styles from "../../styles/styles.js";
-import { ref, uploadBytes } from "firebase/storage";
 
 const FoodCreate = ({ navigation }) => {
   const [foodImage, setFoodImage] = useState(null);

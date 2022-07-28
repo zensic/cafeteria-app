@@ -8,12 +8,13 @@ import Field from "../common/Field";
 import { fbGetVendorDetails, fbUpdateVendorDetails } from "../../firebase";
 
 const ProfileEdit = ({ navigation }) => {
+  const [imageUrl, setImageUrl] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
 
   const handleConfirm = async () => {
-    await fbUpdateVendorDetails(name, description, location);
+    await fbUpdateVendorDetails(imageUrl, name, description, location);
 
     navigation.navigate("Vendor Details");
   };
@@ -23,7 +24,7 @@ const ProfileEdit = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fbGetVendorDetails(setName, setDescription, setLocation);
+    fbGetVendorDetails(setImageUrl, setName, setDescription, setLocation);
   }, []);
 
   return (
@@ -31,7 +32,11 @@ const ProfileEdit = ({ navigation }) => {
       <Pressable>
         <ImageBackground
           style={styles.foodBannerImage}
-          source={require("../../assets/images/upload-food.jpg")}
+          source={
+            imageUrl != ""
+              ? { uri: imageUrl }
+              : require("../../assets/images/no-image.jpg")
+          }
         >
           <Text style={styles.foodBannerImageText}>Upload New Store Image</Text>
         </ImageBackground>

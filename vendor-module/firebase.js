@@ -107,6 +107,7 @@ const fbSignIn = async (email, password, callback) => {
     });
 };
 
+// Accepts image file & relative path, uploads image to firestore
 const fbUploadImage = async (foodImage, path) => {
   // Generate uuid
   let imageName = uuid.v4();
@@ -121,14 +122,16 @@ const fbUploadImage = async (foodImage, path) => {
   return imageName;
 };
 
-const fbGetDownloadURL = async (relativeUrl, setImageUrl) => {
-  getDownloadURL(ref(storage, relativeUrl))
+// Accepts relative path & useState callback, sets it to state using callback function 
+const fbGetDownloadURL = async (path, setImageUrl) => {
+  getDownloadURL(ref(storage, path))
     .then((url) => setImageUrl(url))
     .catch((error) => console.log(error));
 };
 
-const fbUpdateVendorDetails = async (name, description, location) => {
+const fbUpdateVendorDetails = async (imageUrl, name, description, location) => {
   await setDoc(doc(db, "vendor", auth.currentUser.email), {
+    url: imageUrl,
     name: name,
     description: description,
     location: location,
@@ -136,11 +139,12 @@ const fbUpdateVendorDetails = async (name, description, location) => {
   console.log("Updated vendor details");
 };
 
-const fbGetVendorDetails = async (setName, setDescription, setLocation) => {
+const fbGetVendorDetails = async (setImageUrl, setName, setDescription, setLocation) => {
   const docRef = doc(db, "vendor", auth.currentUser.email);
   const vendorDetails = await getDoc(docRef);
 
   if (vendorDetails != null) {
+    setImageUrl(vendorDetails.data().url);
     setName(vendorDetails.data().name);
     setDescription(vendorDetails.data().description);
     setLocation(vendorDetails.data().location);
