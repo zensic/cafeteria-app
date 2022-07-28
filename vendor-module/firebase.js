@@ -34,23 +34,38 @@ const fbSignUp = async (email, password, callback) => {
     .then(async (userCredential) => {
       const user = userCredential.user;
 
-      // Add user to user
+      // Add user to vendor group
       await setDoc(doc(db, "userGroups", user.email), {
         group: "vendor",
       });
 
+      // Add default vendor details
+      await setDoc(doc(db, "vendor", user.email), {
+        name: "default",
+        location: "default",
+        description: "default",
+      });
+
       // List of all days in week
-      const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+      const days = [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ];
 
       // Interate through all days in a week
       days.forEach(async (item) => {
-        // Add opening & closing hours & whether the vendor works that day
+        // Add default opening & closing hours & whether the vendor works that day
         await setDoc(doc(db, "vendor", user.email, "openingHours", item), {
           isOpen: false,
           timeStart: "",
           timeEnd: "",
         });
-      }); 
+      });
 
       console.log(`${user.email} successfully registered`);
     })
@@ -91,4 +106,25 @@ const fbSignIn = async (email, password, callback) => {
     });
 };
 
-export { auth, db, storage, fbSignUp, fbSignIn };
+const fbUpdateVendorDetails = async (name, description, location) => {
+  await setDoc(doc(db, "vendor", auth.currentUser.email), {
+    name: name,
+    description: description,
+    location: location,
+  });
+  console.log("Updated vendor details");
+};
+
+const fbGetVendorDetails = async (setName, setDescription, setLocation) => {
+  const docRef = doc(db, "vendor", auth.currentUser.email);
+  const vendorDetails = await getDoc(docRef);
+
+  if (vendorDetails != null) {
+    setName(vendorDetails.data().name);
+    setDescription(vendorDetails.data().description);
+    setLocation(vendorDetails.data().location);
+  }
+  console.log("Fetched vendor details");
+}
+
+export { auth, db, storage, fbSignUp, fbSignIn, fbUpdateVendorDetails,fbGetVendorDetails };

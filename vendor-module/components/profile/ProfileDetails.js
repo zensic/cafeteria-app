@@ -13,6 +13,10 @@ const ProfileDetails = ({ navigation }) => {
     navigation.navigate("Edit Details");
   };
 
+  const handleOpeningHours = () => {
+
+  }
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -35,12 +39,24 @@ const ProfileDetails = ({ navigation }) => {
         <Text style={profileStyle.vendorName}>ABC Stall</Text>
         <View style={profileStyle.vendorField}>
           <Entypo
-            name="location"
+            name="location-pin"
             size={24}
             color={primaryColor}
             style={profileStyle.vendorFieldIcon}
           />
           <Text>123, Jalan Rock, 93300 Kuching, Sarawak</Text>
+        </View>
+        <View style={profileStyle.vendorField}>
+          <Entypo
+            name="list"
+            size={24}
+            color={primaryColor}
+            style={profileStyle.vendorFieldIcon}
+          />
+          <Text>
+            ABC stall sells a variety of chicken based dishes in the Indonesian
+            style
+          </Text>
         </View>
         <View style={profileStyle.vendorField}>
           <FontAwesome5
@@ -57,6 +73,11 @@ const ProfileDetails = ({ navigation }) => {
         <CustomButton
           callback={handleEdit}
           content={"Edit Details"}
+          cstyle={styles.button}
+        />
+        <CustomButton
+          callback={handleOpeningHours}
+          content={"Edit Opening Times"}
           cstyle={styles.button}
         />
         <CustomButton

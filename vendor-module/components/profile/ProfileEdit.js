@@ -1,21 +1,30 @@
 import { View, Text, Pressable, ImageBackground } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import Field from "../common/Field";
+import { fbGetVendorDetails, fbUpdateVendorDetails } from "../../firebase";
 
-const ProfileEdit = ({navigation}) => {
-  const [name, setName] = useState("ABC Stall");
-  const [location, setLocation] = useState("123, Jalan Rock, 93300 Kuching, Sarawak");
-  const [opening, setOpening] = useState("08:30 - 23:00");
+const ProfileEdit = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
 
-  const handleConfirm = () => {};
+  const handleConfirm = async () => {
+    await fbUpdateVendorDetails(name, description, location);
+
+    navigation.navigate("Shop Details");
+  };
 
   const handleCancel = () => {
     navigation.navigate("Shop Details");
   };
+
+  useEffect(() => {
+    fbGetVendorDetails(setName, setDescription, setLocation);
+  }, []);
 
   return (
     <View>
@@ -29,28 +38,27 @@ const ProfileEdit = ({navigation}) => {
       </Pressable>
       <CenterWrapper>
         <Field
-          label={"Stall Name"}
+          label={"Vendor Name"}
           value={name}
-          placeholder={"Enter new stall name here"}
+          placeholder={"Enter your new business's name here"}
           callback={setName}
+        />
+        <Field
+          label={"Description"}
+          value={description}
+          placeholder={"Enter your new business's description here"}
+          callback={setDescription}
         />
         <Field
           label={"Location"}
           value={location}
-          placeholder={"Enter new stall location here"}
+          placeholder={"Enter you new business location here"}
           callback={setLocation}
         />
-        <Field
-          label={"Opening Hours"}
-          value={opening}
-          placeholder={"Enter new store name here"}
-          callback={setOpening}
-        />
-
         <CustomButton
           callback={handleConfirm}
           content={"Confirm"}
-          cstyle={[styles.button, {marginTop: 20}]}
+          cstyle={[styles.button, { marginTop: 20 }]}
         />
         <CustomButton
           callback={handleCancel}
