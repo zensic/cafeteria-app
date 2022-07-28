@@ -1,26 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
 
 import { primaryColor } from "../../styles/styles";
+import { fbGetDownloadURL } from "../../firebase";
 
 const VendorItem = (props) => {
   const nav = useNavigation();
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    fbGetDownloadURL(props.url, setImageUrl);
+  }, []);
+
+  const handlePress = () => {
+    nav.navigate("Vendor Food Listing", {
+      vendorId: props.id,
+      vendorName: props.name,
+      vendorRating: props.rating,
+      vendorUrl: imageUrl
+    });
+  };
 
   return (
-    <Pressable
-      style={vendorItemStyle.container}
-      onPress={() => {
-        nav.navigate("Vendor Food Listing", {
-          vendorName: props.name,
-          vendorRating: props.rating,
-        });
-      }}
-    >
+    <Pressable style={vendorItemStyle.container} onPress={handlePress}>
       <Image
         style={vendorItemStyle.image}
-        source={require("../../assets/images/food-1.jpg")}
+        source={
+          !imageUrl || imageUrl == ""
+            ? require("../../assets/images/food-1.jpg")
+            : { uri: imageUrl }
+        }
       />
       <View style={vendorItemStyle.textContainer}>
         <Text style={vendorItemStyle.text}>{props.name}</Text>

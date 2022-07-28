@@ -1,52 +1,38 @@
-import React from "react";
+import { useIsFocused } from "@react-navigation/native";
+import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
+import { getVendorList } from "../../firebase.js";
 
 import CenterWrapper from "../common/CenterWrapper.js";
 import SearchBar from "../common/SearchBar.js";
 import VendorItem from "../vendors/VendorItem.js"
 
 const VendorListing = () => {
+
+  const [vendorList, setVendorList] = useState(() => []);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    getVendorList(setVendorList);
+  }, [isFocused])
+
   return (
     <CenterWrapper>
       <ScrollView>
         <SearchBar placeholder="Search vendor name.." />
-        {data.vendors.map((vendor) => (
+        {vendorList.map((vendor) => (
           <VendorItem 
-            key={vendor.id}
-            name={vendor.name}
-            rating={vendor.rating}
-            desc={vendor.desc}
+            key={vendor[0]}
+            id={vendor[0]}
+            url={vendor[1]}
+            name={vendor[2]}
+            desc={vendor[3]}
+            rating="5.0"
           />
         ))}
       </ScrollView>
     </CenterWrapper>
   )
 }
-
-const data = {
-  vendors: [
-    {
-      id: 1,
-      name: "Ali's Roti Canai",
-      rating: 4.5,
-      desc: "Indian cuisine",
-      url: "",
-    },
-    {
-      id: 2,
-      name: "Sentucky Fried Chicken",
-      rating: 4.1,
-      desc: "Fried food",
-      url: "",
-    },
-    {
-      id: 3,
-      name: "Hawaii Fried Rice",
-      rating: 4.9,
-      desc: "Rice dishes",
-      url: "",
-    },
-  ],
-};
 
 export default VendorListing

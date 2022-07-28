@@ -63,7 +63,7 @@ const fbSignUp = async (email, password, callback) => {
       // Interate through all days in a week
       days.forEach(async (item) => {
         // Add default opening & closing hours & whether the vendor works that day
-        await setDoc(doc(db, "vendor", user.email, "openingHours", item), {
+        await setDoc(doc(db, "vendors", user.email, "openingHours", item), {
           isOpen: false,
           timeStart: "",
           timeEnd: "",

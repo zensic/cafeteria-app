@@ -6,13 +6,17 @@ import VendorFoodItem from "./VendorFoodItem";
 import SearchBar from "../common/SearchBar";
 
 const VendorFoodListing = ({ route }) => {
-  const { vendorName, vendorRating } = route.params;
+  const { vendorId, vendorName, vendorRating, vendorUrl } = route.params;
 
   return (
     <ScrollView>
       <Image
         style={styles.foodBannerImage}
-        source={require("../../assets/images/food-1.jpg")}
+        source={
+          !vendorUrl || vendorUrl == ""
+            ? require("../../assets/images/food-1.jpg")
+            : { uri: vendorUrl }
+        }
       />
       <CenterWrapper>
         <Text style={{ fontWeight: "bold", fontSize: 18, marginVertical: 10 }}>

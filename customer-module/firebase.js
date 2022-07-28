@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -86,4 +86,27 @@ const fbSignIn = async (email, password, callback) => {
     });
 };
 
-export { auth, fbSignUp, fbSignIn };
+// Accepts relative path & useState callback, sets it to state using callback function
+const fbGetDownloadURL = (path, setImageUrl) => {
+  getDownloadURL(ref(storage, path))
+    .then((url) => setImageUrl(url))
+    .catch((error) => console.log(error));
+};
+
+const getVendorList = async (setVendorList) => {
+  let queryRef = query(collection(db, "vendors"));
+  let querySnapshot = await getDocs(queryRef);
+
+  let vendorTemp = [];
+  querySnapshot.forEach((doc) => {
+    vendorTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().description, doc.data().rating])
+  })
+  setVendorList(vendorTemp);
+}
+
+const getFoodList = async (setFoodList) => {
+  const queryRef = query(collection(db, "food"));
+
+}
+
+export { auth, db, storage, fbSignUp, fbSignIn, fbGetDownloadURL, getVendorList };
