@@ -33,9 +33,9 @@ const ProfileEdit = ({ navigation }) => {
         <ImageBackground
           style={styles.foodBannerImage}
           source={
-            imageUrl != ""
-              ? { uri: imageUrl }
-              : require("../../assets/images/no-image.jpg")
+            !imageUrl || imageUrl == ""
+              ? require("../../assets/images/no-image.jpg")
+              : { uri: imageUrl }
           }
         >
           <Text style={styles.foodBannerImageText}>Upload New Store Image</Text>

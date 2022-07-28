@@ -49,9 +49,9 @@ const FoodItem = (props) => {
       <ImageBackground
         style={styles.foodItemImage}
         source={
-          imageUrl != ""
-            ? { uri: imageUrl }
-            : require("../../assets/images/no-image.jpg")
+          !imageUrl || imageUrl == ""
+            ? require("../../assets/images/no-image.jpg")
+            : { uri: imageUrl }
         }
       >
         <View style={styles.foodItemImageContainer}>
