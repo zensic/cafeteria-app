@@ -25,11 +25,10 @@ const ProfileEdit = ({ navigation }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
-  const useIsFocused = useIsFocused();
 
   useEffect(() => {
     fbGetVendorDetails(setImageUrl, setName, setDescription, setLocation);
-  }, [useIsFocused]);
+  }, []);
 
   useEffect(() => {
     if (imageUrl != "") {

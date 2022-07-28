@@ -46,6 +46,7 @@ const fbSignUp = async (email, password, callback) => {
         name: "default",
         location: "default",
         description: "default",
+        rating: "5.0"
       });
 
       // List of all days in week
