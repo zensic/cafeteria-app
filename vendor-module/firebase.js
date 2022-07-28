@@ -123,7 +123,7 @@ const fbUploadImage = async (foodImage, path) => {
 };
 
 // Accepts relative path & useState callback, sets it to state using callback function 
-const fbGetDownloadURL = async (path, setImageUrl) => {
+const fbGetDownloadURL = (path, setImageUrl) => {
   getDownloadURL(ref(storage, path))
     .then((url) => setImageUrl(url))
     .catch((error) => console.log(error));

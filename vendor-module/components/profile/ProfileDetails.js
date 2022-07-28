@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import { auth, fbGetVendorDetails } from "../../firebase";
+import { useIsFocused } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 
+import { auth, fbGetDownloadURL, fbGetVendorDetails } from "../../firebase";
 import styles, { primaryColor } from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 
 const ProfileDetails = ({ navigation }) => {
+  const [imagePath, setImagePath] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
+  const isFocused = useIsFocused();
 
   const handleEdit = () => {
     navigation.navigate("Edit Details");
   };
 
-  const handleOpeningHours = () => {
-
-  }
+  const handleOpeningHours = () => {};
 
   const handleSignOut = () => {
     signOut(auth)
@@ -34,14 +36,24 @@ const ProfileDetails = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fbGetVendorDetails(setName, setDescription, setLocation);
-  }, []);
+    fbGetVendorDetails(setImageUrl, setName, setDescription, setLocation);
+  }, [isFocused]);
+
+  useEffect(() => {
+    if (imageUrl != "") {
+      fbGetDownloadURL(imageUrl, setImagePath);
+    }
+  }, [imageUrl])
 
   return (
     <View>
       <Image
         style={styles.foodBannerImage}
-        source={require("../../assets/images/upload-food.jpg")}
+        source={
+          !imagePath || imagePath == ""
+            ? require("../../assets/images/no-image.jpg")
+            : { uri: imagePath }
+        }
       />
       <CenterWrapper>
         <Text style={profileStyle.vendorName}>{name}</Text>
@@ -61,9 +73,7 @@ const ProfileDetails = ({ navigation }) => {
             color={primaryColor}
             style={profileStyle.vendorFieldIcon}
           />
-          <Text>
-            {description}
-          </Text>
+          <Text>{description}</Text>
         </View>
         <View style={profileStyle.vendorField}>
           <FontAwesome5

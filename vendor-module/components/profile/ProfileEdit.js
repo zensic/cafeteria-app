@@ -1,20 +1,83 @@
 import { View, Text, Pressable, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 import styles from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import Field from "../common/Field";
-import { fbGetVendorDetails, fbUpdateVendorDetails } from "../../firebase";
+import {
+  auth,
+  fbGetDownloadURL,
+  fbGetVendorDetails,
+  fbUpdateVendorDetails,
+  fbUploadImage,
+} from "../../firebase";
 
 const ProfileEdit = ({ navigation }) => {
+  // Handles the uploaded file
+  const [foodImage, setFoodImage] = useState("");
+  // Handles the realtive image path
   const [imageUrl, setImageUrl] = useState("");
+  // Handles the true image path
+  const [imagePath, setImagePath] = useState("");
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
 
+  useEffect(() => {
+    fbGetVendorDetails(setImageUrl, setName, setDescription, setLocation);
+  }, []);
+
+  useEffect(() => {
+    if (imageUrl != "") {
+      fbGetDownloadURL(imageUrl, setImagePath);
+    }
+  }, [imageUrl])
+
+  // Handles caching of uploaded image
+  const handleUpload = async () => {
+    // permission to access phone camera
+    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted == false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    // opens file explorer to upload image
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+    // if user cancels upload
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    setFoodImage(pickerResult);
+    setImagePath(pickerResult.uri);
+  };
+
   const handleConfirm = async () => {
-    await fbUpdateVendorDetails(imageUrl, name, description, location);
+    // Upload image to storage
+    let imageName = imageUrl;
+
+    // Check if image cache exists
+    if (foodImage) {
+      imageName = await fbUploadImage(
+        foodImage,
+        `images/${auth.currentUser.email}/profile`
+      );
+    }
+
+    // Update vendor details
+    await fbUpdateVendorDetails(
+      `images/${auth.currentUser.email}/profile/${imageName}`,
+      name,
+      description,
+      location
+    );
+
+    alert("You succesfully updated your profile!");
 
     navigation.navigate("Vendor Details");
   };
@@ -23,19 +86,15 @@ const ProfileEdit = ({ navigation }) => {
     navigation.goBack();
   };
 
-  useEffect(() => {
-    fbGetVendorDetails(setImageUrl, setName, setDescription, setLocation);
-  }, []);
-
   return (
     <View>
-      <Pressable>
+      <Pressable onPress={handleUpload}>
         <ImageBackground
           style={styles.foodBannerImage}
           source={
-            !imageUrl || imageUrl == ""
+            !imagePath || imagePath == ""
               ? require("../../assets/images/no-image.jpg")
-              : { uri: imageUrl }
+              : { uri: imagePath }
           }
         >
           <Text style={styles.foodBannerImageText}>Upload New Store Image</Text>

@@ -76,17 +76,19 @@ const FoodCreate = ({ navigation }) => {
         validationSchema={foodSchema}
         onSubmit={async (values) => {
           Keyboard.dismiss();
-
-          let imageName = await fbUploadImage(foodImage, `images/${auth.currentUser.email}`);
-
+          
+          // Upload image to storage
+          let imageName = await fbUploadImage(foodImage, `images/${auth.currentUser.email}/food`);
+          
+          // Add document to fireStore
           const docRef = await addDoc(collection(db, "food"), {
             name: values.name,
             price: values.price,
-            url: `images/${auth.currentUser.email}/${imageName}`,
+            url: `images/${auth.currentUser.email}/food/${imageName}`,
             email: auth.currentUser.email,
           });
 
-          alert(`Document written with ID: ${docRef.id}`);
+          alert(`You succesfully created Food #${docRef.id}!`);
           navigation.goBack();
         }}
       >

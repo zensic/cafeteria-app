@@ -12,6 +12,10 @@ const FoodItem = (props) => {
   const nav = useNavigation();
   const [imageUrl, setImageUrl] = useState("");
 
+  useEffect(() => {
+    fbGetDownloadURL(props.url, setImageUrl);
+  }, []);
+
   const handleViewFood = () => {
     nav.navigate("Food Details", {
       foodName: props.foodName,
@@ -34,10 +38,6 @@ const FoodItem = (props) => {
     alert(`Deleted ${props.foodName}!`);
     nav.navigate("Orders");
   };
-
-  useEffect(() => {
-    fbGetDownloadURL(props.url, setImageUrl);
-  }, []);
 
   return (
     <Pressable
