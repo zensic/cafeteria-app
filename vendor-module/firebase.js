@@ -31,13 +31,26 @@ const fbSignUp = async (email, password, callback) => {
   // Create a new account with email and password
   // Assign the new account vendor group in FireStore
   await createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+    .then(async (userCredential) => {
       const user = userCredential.user;
 
-      // Create an entry in the firestore database
-      setDoc(doc(db, "userGroup", user.email), {
+      // Add user to user
+      await setDoc(doc(db, "userGroups", user.email), {
         group: "vendor",
       });
+
+      // List of all days in week
+      const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+      // Interate through all days in a week
+      days.forEach(async (item) => {
+        // Add opening & closing hours & whether the vendor works that day
+        await setDoc(doc(db, "vendor", user.email, "openingHours", item), {
+          isOpen: false,
+          timeStart: "",
+          timeEnd: "",
+        });
+      }); 
 
       console.log(`${user.email} successfully registered`);
     })
@@ -53,11 +66,11 @@ const fbSignUp = async (email, password, callback) => {
 
 const fbSignIn = async (email, password, callback) => {
   // Check if email in list of roles for firestore
-  const docSnap = await getDoc(doc(db, "userGroup", email));
+  const docSnap = await getDoc(doc(db, "userGroups", email));
 
   if (!docSnap.exists() || docSnap.data().group != "vendor") {
     callback(false);
-    alert("User doesn't exist!");
+    alert("Vendor doesn't exist!");
 
     return 0;
   }
