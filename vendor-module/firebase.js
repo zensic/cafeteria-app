@@ -6,7 +6,8 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import uuid from "react-native-uuid";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -106,6 +107,20 @@ const fbSignIn = async (email, password, callback) => {
     });
 };
 
+const fbUploadImage = async (foodImage, path) => {
+  // Generate uuid
+  let imageName = uuid.v4();
+
+  // Upload image to firebase if image exists
+  const refence = ref(storage, `${path}/${imageName}`);
+  const imageFile = await fetch(foodImage.uri);
+  const bytes = await imageFile.blob();
+
+  await uploadBytes(refence, bytes);
+
+  return imageName;
+};
+
 const fbUpdateVendorDetails = async (name, description, location) => {
   await setDoc(doc(db, "vendor", auth.currentUser.email), {
     name: name,
@@ -125,6 +140,15 @@ const fbGetVendorDetails = async (setName, setDescription, setLocation) => {
     setLocation(vendorDetails.data().location);
   }
   console.log("Fetched vendor details");
-}
+};
 
-export { auth, db, storage, fbSignUp, fbSignIn, fbUpdateVendorDetails,fbGetVendorDetails };
+export {
+  auth,
+  db,
+  storage,
+  fbSignUp,
+  fbSignIn,
+  fbUploadImage,
+  fbUpdateVendorDetails,
+  fbGetVendorDetails,
+};

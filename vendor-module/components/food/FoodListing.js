@@ -59,32 +59,3 @@ const FoodListing = ({ navigation }) => {
 };
 
 export default FoodListing;
-
-const data = {
-  food: [
-    {
-      id: 1,
-      name: "Fried rice",
-      price: 4.99,
-      url: "",
-    },
-    {
-      id: 2,
-      name: "Chicken rice",
-      price: 5.99,
-      url: "",
-    },
-    {
-      id: 3,
-      name: "Nasi lemak",
-      price: 6,
-      url: "",
-    },
-    {
-      id: 4,
-      name: "Roti canai",
-      price: 3.99,
-      url: "",
-    },
-  ],
-};

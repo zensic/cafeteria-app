@@ -10,14 +10,14 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import * as ImagePicker from "expo-image-picker";
-import uuid from "react-native-uuid";
 import { collection, addDoc } from "firebase/firestore";
-import { uploadBytes, ref } from "firebase/storage";
+import uuid from "react-native-uuid";
 
-import { auth, db, storage } from "../../firebase";
+import { auth, db, storage, fbUploadImage } from "../../firebase";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import styles from "../../styles/styles.js";
+import { ref, uploadBytes } from "firebase/storage";
 
 const FoodCreate = ({ navigation }) => {
   const [foodImage, setFoodImage] = useState(null);
@@ -47,9 +47,9 @@ const FoodCreate = ({ navigation }) => {
   };
 
   const foodSchema = yup.object({
-    name: yup.string()
-      .required(),
-    price: yup.number()
+    name: yup.string().required(),
+    price: yup
+      .number()
       .required()
       .positive()
       .test(
@@ -79,20 +79,8 @@ const FoodCreate = ({ navigation }) => {
         onSubmit={async (values) => {
           Keyboard.dismiss();
 
-          // Generate uuid
-          let imageName = uuid.v4();
+          let imageName = await fbUploadImage(foodImage, `images/${auth.currentUser.email}`);
 
-          // Upload image to firebase if image exists
-          if (foodImage) {
-            const refence = ref(
-              storage,
-              `images/${auth.currentUser.email}/${imageName}`
-            );
-            const imageFile = await fetch(foodImage.uri);
-            const bytes = await imageFile.blob();
-
-            await uploadBytes(refence, bytes);
-          }
           const docRef = await addDoc(collection(db, "food"), {
             name: values.name,
             price: values.price,
@@ -101,7 +89,7 @@ const FoodCreate = ({ navigation }) => {
           });
 
           alert(`Document written with ID: ${docRef.id}`);
-          navigation.goBack()
+          navigation.goBack();
         }}
       >
         {(props) => (
