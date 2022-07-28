@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "customer-module",
+    "name": "Cafeteria App - Customer",
     "slug": "customer-module",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,6 +21,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package":"anthony.cafeteria.customer",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
