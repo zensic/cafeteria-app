@@ -5,6 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,11 +23,27 @@ const firebaseConfig = {
 // Initialize Firebase, check whether FireBase has been init
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth();
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-const fbSignUp = (email, password, callback) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
+const fbSignUp = async (email, password, callback) => {
+  // Create a new account with email and password
+  // Assign the new account customer group in FireStore
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then(async (userCredential) => {
       const user = userCredential.user;
+
+      // Add user to customer group
+      await setDoc(doc(db, "userGroups", user.email), {
+        group: "customer",
+      });
+
+      await setDoc(doc(db, "customers", user.email), {
+        url: "",
+        name: "default",
+        mobile: "",
+      });
+
       console.log(`${user.email} successfully registered`);
     })
     .catch((error) => {
@@ -39,14 +57,26 @@ const fbSignUp = (email, password, callback) => {
     });
 };
 
-const fbSignIn = (email, password, callback) => {
+const fbSignIn = async (email, password, callback) => {
+  // Check if email in list of roles for firestore
+  const docSnap = await getDoc(doc(db, "userGroups", email));
+
+  if (!docSnap.exists() || docSnap.data().group != "customer") {
+    callback(false);
+    alert(
+      "Oops, something went wrong. Have you registered for an account? \n\nThe same email cannot be used to register for different user groups"
+    );
+
+    return 0;
+  }
+
+  // Check if email and password matches
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       console.log(`${user.email} has signed in`);
     })
     .catch((error) => {
-      // Alert the error message
       alert(error.message);
 
       // If a callback function is provided, call it

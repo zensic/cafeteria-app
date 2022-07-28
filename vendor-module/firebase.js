@@ -41,7 +41,8 @@ const fbSignUp = async (email, password, callback) => {
       });
 
       // Add default vendor details
-      await setDoc(doc(db, "vendor", user.email), {
+      await setDoc(doc(db, "vendors", user.email), {
+        url: "",
         name: "default",
         location: "default",
         description: "default",
@@ -86,7 +87,9 @@ const fbSignIn = async (email, password, callback) => {
 
   if (!docSnap.exists() || docSnap.data().group != "vendor") {
     callback(false);
-    alert("Vendor doesn't exist!");
+    alert(
+      "Oops, something went wrong. Have you registered for an account? \n\nThe same email cannot be used to register for different user groups"
+    );
 
     return 0;
   }
@@ -122,7 +125,7 @@ const fbUploadImage = async (foodImage, path) => {
   return imageName;
 };
 
-// Accepts relative path & useState callback, sets it to state using callback function 
+// Accepts relative path & useState callback, sets it to state using callback function
 const fbGetDownloadURL = (path, setImageUrl) => {
   getDownloadURL(ref(storage, path))
     .then((url) => setImageUrl(url))
@@ -130,7 +133,7 @@ const fbGetDownloadURL = (path, setImageUrl) => {
 };
 
 const fbUpdateVendorDetails = async (imageUrl, name, description, location) => {
-  await setDoc(doc(db, "vendor", auth.currentUser.email), {
+  await setDoc(doc(db, "vendors", auth.currentUser.email), {
     url: imageUrl,
     name: name,
     description: description,
@@ -139,8 +142,13 @@ const fbUpdateVendorDetails = async (imageUrl, name, description, location) => {
   console.log("Updated vendor details");
 };
 
-const fbGetVendorDetails = async (setImageUrl, setName, setDescription, setLocation) => {
-  const docRef = doc(db, "vendor", auth.currentUser.email);
+const fbGetVendorDetails = async (
+  setImageUrl,
+  setName,
+  setDescription,
+  setLocation
+) => {
+  const docRef = doc(db, "vendors", auth.currentUser.email);
   const vendorDetails = await getDoc(docRef);
 
   if (vendorDetails != null) {
