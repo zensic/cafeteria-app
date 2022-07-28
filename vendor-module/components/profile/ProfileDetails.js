@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import { auth } from "../../firebase";
+import { auth, fbGetVendorDetails } from "../../firebase";
 import { signOut } from "firebase/auth";
 
 import styles, { primaryColor } from "../../styles/styles";
@@ -9,6 +9,10 @@ import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 
 const ProfileDetails = ({ navigation }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+
   const handleEdit = () => {
     navigation.navigate("Edit Details");
   };
@@ -29,6 +33,10 @@ const ProfileDetails = ({ navigation }) => {
       });
   };
 
+  useEffect(() => {
+    fbGetVendorDetails(setName, setDescription, setLocation);
+  }, []);
+
   return (
     <View>
       <Image
@@ -36,7 +44,7 @@ const ProfileDetails = ({ navigation }) => {
         source={require("../../assets/images/upload-food.jpg")}
       />
       <CenterWrapper>
-        <Text style={profileStyle.vendorName}>ABC Stall</Text>
+        <Text style={profileStyle.vendorName}>{name}</Text>
         <View style={profileStyle.vendorField}>
           <Entypo
             name="location-pin"
@@ -44,7 +52,7 @@ const ProfileDetails = ({ navigation }) => {
             color={primaryColor}
             style={profileStyle.vendorFieldIcon}
           />
-          <Text>123, Jalan Rock, 93300 Kuching, Sarawak</Text>
+          <Text>{location}</Text>
         </View>
         <View style={profileStyle.vendorField}>
           <Entypo
@@ -54,8 +62,7 @@ const ProfileDetails = ({ navigation }) => {
             style={profileStyle.vendorFieldIcon}
           />
           <Text>
-            ABC stall sells a variety of chicken based dishes in the Indonesian
-            style
+            {description}
           </Text>
         </View>
         <View style={profileStyle.vendorField}>
@@ -66,7 +73,7 @@ const ProfileDetails = ({ navigation }) => {
             style={profileStyle.vendorFieldIcon}
           />
           <View>
-            <Text style={{ marginTop: 5 }}>Opening times</Text>
+            <Text>Opening times</Text>
             <Text style={{ marginTop: 5 }}>08:30 - 23:00</Text>
           </View>
         </View>

@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import uuid from "react-native-uuid";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -121,6 +121,12 @@ const fbUploadImage = async (foodImage, path) => {
   return imageName;
 };
 
+const fbGetDownloadURL = async (relativeUrl, setImageUrl) => {
+  getDownloadURL(ref(storage, relativeUrl))
+    .then((url) => setImageUrl(url))
+    .catch((error) => console.log(error));
+};
+
 const fbUpdateVendorDetails = async (name, description, location) => {
   await setDoc(doc(db, "vendor", auth.currentUser.email), {
     name: name,
@@ -149,6 +155,7 @@ export {
   fbSignUp,
   fbSignIn,
   fbUploadImage,
+  fbGetDownloadURL,
   fbUpdateVendorDetails,
   fbGetVendorDetails,
 };

@@ -15,11 +15,11 @@ const ProfileEdit = ({ navigation }) => {
   const handleConfirm = async () => {
     await fbUpdateVendorDetails(name, description, location);
 
-    navigation.navigate("Shop Details");
+    navigation.navigate("Vendor Details");
   };
 
   const handleCancel = () => {
-    navigation.navigate("Shop Details");
+    navigation.goBack();
   };
 
   useEffect(() => {

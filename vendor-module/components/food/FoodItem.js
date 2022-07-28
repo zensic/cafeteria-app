@@ -2,10 +2,9 @@ import { View, Text, Pressable, ImageBackground } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { ref, getDownloadURL } from "firebase/storage";
 import { doc, deleteDoc } from "firebase/firestore";
 
-import { db, storage } from "../../firebase";
+import { db, fbGetDownloadURL, storage } from "../../firebase";
 import styles from "../../styles/styles";
 import CustomButton from "../common/CustomButton";
 
@@ -37,9 +36,7 @@ const FoodItem = (props) => {
   };
 
   useEffect(() => {
-    getDownloadURL(ref(storage, props.url))
-      .then((url) => setImageUrl(url))
-      .catch((error) => console.log(error));
+    fbGetDownloadURL(props.url, setImageUrl);
   }, []);
 
   return (
