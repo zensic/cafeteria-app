@@ -92,11 +92,11 @@ const ProfileDetails = ({ navigation }) => {
           content={"Edit Details"}
           cstyle={styles.button}
         />
-        <CustomButton
+        {/* <CustomButton
           callback={handleOpeningHours}
           content={"Edit Opening Times"}
           cstyle={styles.button}
-        />
+        /> */}
         <CustomButton
           callback={handleSignOut}
           content={"Sign Out"}
