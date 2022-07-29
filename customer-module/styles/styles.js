@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalView: {
-    height: "75%",
+    height: "65%",
     width: "100%",
     borderRadius: 12,
     overflow: "hidden",
@@ -122,7 +122,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   modalButtonContainer: {
-    alignItems: "center",
     padding: 10,
   },
   modalButton: {

@@ -1,12 +1,20 @@
-import { View, Text, Image, ScrollView } from "react-native";
-import React from "react";
-import styles from "../../styles/styles";
+import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FontAwesome } from "@expo/vector-icons";
+
+import { getFoodList } from "../../firebase.js";
+import styles, { primaryColor } from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import VendorFoodItem from "./VendorFoodItem";
 import SearchBar from "../common/SearchBar";
 
 const VendorFoodListing = ({ route }) => {
   const { vendorId, vendorName, vendorRating, vendorUrl } = route.params;
+  const [foodList, setFoodList] = useState(() => []);
+
+  useEffect(() => {
+    getFoodList(vendorId, setFoodList);
+  }, []);
 
   return (
     <ScrollView>
@@ -19,17 +27,25 @@ const VendorFoodListing = ({ route }) => {
         }
       />
       <CenterWrapper>
-        <Text style={{ fontWeight: "bold", fontSize: 18, marginVertical: 10 }}>
-          {vendorName}
-        </Text>
-        <SearchBar  placeholder="Search food name.." />
-        {data.food.map((item) => (
+        <View style={vendorFoodListingStyle.titleContainer}>
+          <Text
+            style={vendorFoodListingStyle.title}
+          >
+            {vendorName}
+          </Text>
+          <Text style={vendorFoodListingStyle.title}>
+            {vendorRating}{" "}<FontAwesome name="star" size={16} color={primaryColor} />
+          </Text>
+        </View>
+        <SearchBar placeholder="Search food name.." />
+        {foodList.map((item) => (
           <VendorFoodItem
-            key={item.id}
-            image={item.url}
-            foodName={item.name}
-            foodPrice={item.price.toFixed(2)}
-            foodRating={item.rating.toFixed(1)}
+            key={item[0]}
+            foodId={item[0]}
+            url={item[1]}
+            foodName={item[2]}
+            foodPrice={item[3]}
+            foodRating="5.0"
           />
         ))}
       </CenterWrapper>
@@ -39,35 +55,13 @@ const VendorFoodListing = ({ route }) => {
 
 export default VendorFoodListing;
 
-const data = {
-  food: [
-    {
-      id: 1,
-      name: "Fried rice",
-      price: 4.99,
-      rating: 4.1,
-      url: "",
-    },
-    {
-      id: 2,
-      name: "Chicken rice",
-      price: 5.99,
-      rating: 4.4,
-      url: "",
-    },
-    {
-      id: 3,
-      name: "Nasi lemak",
-      price: 6,
-      rating: 4.8,
-      url: "",
-    },
-    {
-      id: 4,
-      name: "Roti canai",
-      price: 3.99,
-      rating: 4.5,
-      url: "",
-    },
-  ],
-};
+const vendorFoodListingStyle = StyleSheet.create({
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 10,
+  },
+  title: {
+    fontWeight: "bold", fontSize: 18
+  }
+})

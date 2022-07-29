@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -99,14 +99,30 @@ const getVendorList = async (setVendorList) => {
 
   let vendorTemp = [];
   querySnapshot.forEach((doc) => {
-    vendorTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().description, doc.data().rating])
+    vendorTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().description, doc.data().rating]);
   })
   setVendorList(vendorTemp);
 }
 
-const getFoodList = async (setFoodList) => {
-  const queryRef = query(collection(db, "food"));
+const getFoodList = async (vendorEmail, setFoodList) => {
+  let queryRef = query(collection(db, "food"), where("email", "==", vendorEmail));
+  let querySnapshot = await getDocs(queryRef);
 
+  let foodTemp = [];
+  querySnapshot.forEach((doc) => {
+    foodTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().price]);
+  })
+  setFoodList(foodTemp);
 }
 
-export { auth, db, storage, fbSignUp, fbSignIn, fbGetDownloadURL, getVendorList };
+const createCartItem = async (customerEmail, vendorEmail, itemId, itemQuantity, itemPrice) => {
+  let docRef = await addDoc(collection(db, "cart", customerEmail, itemId), {
+    vendorEmail: vendorEmail,
+    itemQuantity: itemQuantity,
+    itemPrice: itemPrice
+  })
+
+  alert(`You added created item #${docRef.id} to your cart!`)
+}
+
+export { auth, db, storage, fbSignUp, fbSignIn, fbGetDownloadURL, getVendorList, getFoodList, createCartItem };

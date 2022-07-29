@@ -7,14 +7,29 @@ import {
   Text,
   View,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
 import styles, { primaryColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom";
 import Hr from "../common/Hr";
+import { auth, createCartItem } from "../../firebase";
 
 const VendorFoodModal = (props) => {
+  const [quantity, setQuantity] = useState(1);
+
+  const handleSubmit = () => {
+    createCartItem(auth.currentUser.email, props);
+  }
+
+  const handlePlus = () => {
+    setQuantity((q) => q + 1);
+  };
+
+  const handleMinus = () => {
+    setQuantity((q) => (q > 1 ? q - 1 : q));
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -34,29 +49,39 @@ const VendorFoodModal = (props) => {
           </View>
           <Image
             style={styles.foodBannerImage}
-            source={require("../../assets/images/food-2.jpg")}
+            source={
+              !props.foodUrl || props.foodUrl == ""
+                ? require("../../assets/images/food-1.jpg")
+                : { uri: props.foodUrl }
+            }
           />
           <ScrollView
             contentContainerStyle={{ padding: 10 }}
             style={styles.modalContent}
           >
             <View style={foodModalStyles.titleContainer}>
-              <Text style={foodModalStyles.title}>Fried Rice</Text>
-              <Text style={foodModalStyles.title}>RM 10.99</Text>
+              <Text style={foodModalStyles.title}>{props.foodName}</Text>
+              <Text style={foodModalStyles.title}>RM {props.foodPrice}</Text>
             </View>
             <Hr />
-            <View style={foodModalStyles.quantityContainer}>
-              <Pressable>
-                <AntDesign name="minuscircle" size={36} color={primaryColor} />
-              </Pressable>
-
-              <Text style={foodModalStyles.quantity}>1</Text>
-              <Pressable>
-                <AntDesign name="pluscircle" size={36} color={primaryColor} />
-              </Pressable>
-            </View>
           </ScrollView>
           <View style={styles.modalButtonContainer}>
+            <View style={foodModalStyles.quantityContainer}>
+              <Text style={foodModalStyles.title}>Quantity</Text>
+              <View style={foodModalStyles.quantityNumberContainer}>
+                <Pressable onPress={handleMinus}>
+                  <AntDesign
+                    name="minussquare"
+                    size={36}
+                    color={primaryColor}
+                  />
+                </Pressable>
+                <Text style={foodModalStyles.quantity}>{quantity}</Text>
+                <Pressable onPress={handlePlus}>
+                  <AntDesign name="plussquare" size={36} color={primaryColor} />
+                </Pressable>
+              </View>
+            </View>
             <CustomButton
               cstyle={styles.modalButton}
               tstyle={styles.modalButtonText}
@@ -84,8 +109,14 @@ const foodModalStyles = StyleSheet.create({
   quantityContainer: {
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
+    marginBottom: 10,
+    justifyContent: "space-between",
+  },
+  quantityNumberContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
   },
   quantity: {
     marginHorizontal: 10,
