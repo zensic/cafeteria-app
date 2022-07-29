@@ -6,20 +6,26 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { useIsFocused } from "@react-navigation/native";
 
-import styles, {
-  primaryColor,
-  secondaryColor,
-  accentColor,
-} from "../../styles/styles";
+import styles, { secondaryColor, accentColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom.js";
 import CartItem from "./CartItem";
 import Hr from "../common/Hr";
+import { auth, getCartList } from "../../firebase";
 
 const Cart = (props) => {
+  const isFocused = useIsFocused();
+  const [cartList, setCartList] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    getCartList(auth.currentUser.email, setCartList, setTotalPrice);
+  }, [isFocused]);
+
   return (
     <Modal
       animationType="fade"
@@ -42,11 +48,25 @@ const Cart = (props) => {
             style={styles.modalContent}
           >
             <Text style={{ marginBottom: 10, fontWeight: "bold" }}>
-              Table Number #1
+              Order List
             </Text>
-            <CartItem />
-            <CartItem />
-            <CartItem />
+            {cartList == null ? (
+              <Text style={{ marginBottom: 5, fontStyle: "italic" }}>
+                Cart is empty, add something to the cart!
+              </Text>
+            ) : (
+              cartList.map((cItem) => (
+                <CartItem
+                  key={cItem[0]}
+                  itemId={cItem[1]}
+                  itemName={cItem[2]}
+                  itemUrl={cItem[3]}
+                  itemQuantity={cItem[4]}
+                  itemPrice={cItem[5]}
+                  vendorEmail={cItem[6]}
+                />
+              ))
+            )}
             <Hr />
             <Text style={{ marginVertical: 10, fontWeight: "bold" }}>
               Payment method
@@ -61,7 +81,7 @@ const Cart = (props) => {
           >
             <View style={cartStyles.total}>
               <Text style={cartStyles.totalText}>Total</Text>
-              <Text style={cartStyles.totalText}>RM 10.99</Text>
+              <Text style={cartStyles.totalText}>RM {totalPrice}</Text>
             </View>
             <CustomButton
               cstyle={styles.modalButton}
@@ -106,7 +126,3 @@ const cartStyles = StyleSheet.create({
 });
 
 export default Cart;
-
-const data = {
-  cart: [{}],
-};

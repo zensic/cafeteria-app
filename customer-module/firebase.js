@@ -5,7 +5,17 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -99,30 +109,88 @@ const getVendorList = async (setVendorList) => {
 
   let vendorTemp = [];
   querySnapshot.forEach((doc) => {
-    vendorTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().description, doc.data().rating]);
-  })
+    vendorTemp.push([
+      doc.id,
+      doc.data().url,
+      doc.data().name,
+      doc.data().description,
+      doc.data().rating,
+    ]);
+  });
   setVendorList(vendorTemp);
-}
+};
 
 const getFoodList = async (vendorEmail, setFoodList) => {
-  let queryRef = query(collection(db, "food"), where("email", "==", vendorEmail));
+  let queryRef = query(
+    collection(db, "food"),
+    where("email", "==", vendorEmail)
+  );
   let querySnapshot = await getDocs(queryRef);
 
   let foodTemp = [];
   querySnapshot.forEach((doc) => {
     foodTemp.push([doc.id, doc.data().url, doc.data().name, doc.data().price]);
-  })
+  });
   setFoodList(foodTemp);
-}
+};
 
-const createCartItem = async (customerEmail, vendorEmail, itemId, itemQuantity, itemPrice) => {
-  let docRef = await addDoc(collection(db, "cart", customerEmail, itemId), {
-    vendorEmail: vendorEmail,
-    itemQuantity: itemQuantity,
-    itemPrice: itemPrice
-  })
+const createCartItem = async (
+  customerEmail,
+  vendorEmail,
+  itemId,
+  itemName,
+  itemUrl,
+  itemQuantity,
+  itemPrice
+) => {
+  let docRef = await addDoc(
+    collection(db, "customers", customerEmail, "cart"),
+    {
+      vendorEmail: vendorEmail,
+      itemId: itemId,
+      itemName: itemName,
+      itemUrl: itemUrl,
+      itemQuantity: itemQuantity,
+      itemPrice: itemPrice,
+    }
+  );
 
-  alert(`You added created item #${docRef.id} to your cart!`)
-}
+  alert(`You added item #${docRef.id} to your cart!`);
+};
 
-export { auth, db, storage, fbSignUp, fbSignIn, fbGetDownloadURL, getVendorList, getFoodList, createCartItem };
+const getCartList = async (customerEmail, setCartList, setTotalPrice) => {
+  let querySnapshot = await getDocs(
+    collection(db, "customers", customerEmail, "cart")
+  );
+
+  let cartTemp = [];
+  let totalPrice = 0.00;
+  querySnapshot.forEach((doc) => {
+    cartTemp.push([
+      doc.id,
+      doc.data().itemId,
+      doc.data().itemName,
+      doc.data().itemUrl,
+      doc.data().itemQuantity,
+      doc.data().itemPrice,
+      doc.data().vendorEmail,
+    ]);
+    let truePrice = parseFloat(doc.data().itemQuantity) * parseFloat(doc.data().itemPrice);
+    totalPrice += truePrice;
+  });
+  setCartList(cartTemp);
+  setTotalPrice(totalPrice)
+};
+
+export {
+  auth,
+  db,
+  storage,
+  fbSignUp,
+  fbSignIn,
+  fbGetDownloadURL,
+  getVendorList,
+  getFoodList,
+  createCartItem,
+  getCartList,
+};

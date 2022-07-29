@@ -1,28 +1,39 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import styles, { primaryColor } from "../../styles/styles";
+import { primaryColor } from "../../styles/styles";
 import Hr from "../common/Hr";
+import { fbGetDownloadURL } from "../../firebase";
 
 const CartItem = (props) => {
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    fbGetDownloadURL(props.itemUrl, setImageUrl);
+  }, [])
+
   return (
-    <>
+    <View>
       <Hr />
       <Pressable style={cartItemStyles.container}>
-        <Text style={cartItemStyles.quantity}>1x</Text>
+        <Text style={cartItemStyles.quantity}>{props.itemQuantity}x</Text>
         <Image
           style={cartItemStyles.image}
-          source={require("../../assets/images/food-1.jpg")}
+          source={
+          !imageUrl || imageUrl == ""
+            ? require("../../assets/images/food-1.jpg")
+            : { uri: imageUrl }
+        }
         />
         <View style={cartItemStyles.textContainer}>
           <View style={cartItemStyles.headingContainer}>
-            <Text style={cartItemStyles.title}>Food Name</Text>
-            <Text style={cartItemStyles.title}>RM 10.99</Text>
+            <Text style={cartItemStyles.title}>{props.itemName}</Text>
+            <Text style={cartItemStyles.title}>{props.itemPrice}</Text>
           </View>
           <Text style={cartItemStyles.desc}>Variety</Text>
         </View>
       </Pressable>
-    </>
+    </View>
   );
 };
 

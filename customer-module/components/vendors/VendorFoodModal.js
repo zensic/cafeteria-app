@@ -7,20 +7,30 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
 import styles, { primaryColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom";
 import Hr from "../common/Hr";
 import { auth, createCartItem } from "../../firebase";
+import { UserContext } from "./VendorFoodListing";
 
 const VendorFoodModal = (props) => {
+  const vendorId = useContext(UserContext);
   const [quantity, setQuantity] = useState(1);
 
   const handleSubmit = () => {
-    createCartItem(auth.currentUser.email, props);
-  }
+    createCartItem(
+      auth.currentUser.email,
+      vendorId,
+      props.foodId,
+      props.foodName,
+      props.foodUrlRelative,
+      quantity,
+      props.foodPrice
+    );
+  };
 
   const handlePlus = () => {
     setQuantity((q) => q + 1);
@@ -86,6 +96,7 @@ const VendorFoodModal = (props) => {
               cstyle={styles.modalButton}
               tstyle={styles.modalButtonText}
               content={"Add to Cart"}
+              callback={handleSubmit}
             />
           </View>
         </View>

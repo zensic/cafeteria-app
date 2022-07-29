@@ -20,6 +20,7 @@ const VendorFoodItem = (props) => {
         visible={visible} 
         setVisible={setVisible}
         foodId={props.foodId}
+        foodUrlRelative={props.url}
         foodUrl={imageUrl}
         foodName={props.foodName}
         foodPrice={props.foodPrice}

@@ -35,7 +35,7 @@ const Profile = ({ navigation }) => {
           <MaterialIcons name="email" size={24} color="black" />
           <View style={profileStyles.property}>
             <Text style={profileStyles.label}>Email</Text>
-            <Text style={profileStyles.field}>joe@mail.com</Text>
+            <Text style={profileStyles.field}>{auth.currentUser.email}</Text>
           </View>
         </View>
         <View style={profileStyles.propertyContainer}>
