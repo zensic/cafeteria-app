@@ -28,7 +28,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.7",
     "yup": "^0.32.11",
-    "expo-updates": "~0.13.3"
+    "expo-updates": "~0.13.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
