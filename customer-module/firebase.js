@@ -17,18 +17,9 @@ import {
   where,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import firebaseConfig from "./firebase.config";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyB662_Fc1CowlT6Dyd_igscmNsxmLU_aGY",
-  authDomain: "cafeteria-app-1b669.firebaseapp.com",
-  projectId: "cafeteria-app-1b669",
-  storageBucket: "cafeteria-app-1b669.appspot.com",
-  messagingSenderId: "736199130968",
-  appId: "1:736199130968:web:07f7245044db26dd0d6f2d",
-};
 
 // Initialize Firebase, check whether FireBase has been init
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
