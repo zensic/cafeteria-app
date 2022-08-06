@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, Text, View, StyleSheet } from "react-native";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
-import { useIsFocused } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 
 import { auth, fbGetDownloadURL, fbGetVendorDetails } from "../../firebase";
@@ -15,7 +14,7 @@ const ProfileDetails = ({ navigation }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
-  const isFocused = useIsFocused();
+  const isFocused = navigation.isFocused();
 
   const handleEdit = () => {
     navigation.navigate("Edit Details");

@@ -138,7 +138,7 @@ const fbGetVendorDetails = async (
   setImageUrl,
   setName,
   setDescription,
-  setLocation
+  setLocation,
 ) => {
   const docRef = doc(db, "vendors", auth.currentUser.email);
   const vendorDetails = await getDoc(docRef);

@@ -88,7 +88,7 @@ const FoodCreate = ({ navigation }) => {
             email: auth.currentUser.email,
           });
 
-          alert(`You succesfully created Food #${docRef.id}!`);
+          alert(`You succesfully created Food #${values.name}!`);
           navigation.goBack();
         }}
       >
