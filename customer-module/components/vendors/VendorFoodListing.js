@@ -1,5 +1,5 @@
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
 import { getFoodList } from "../../firebase.js";
@@ -7,8 +7,7 @@ import styles, { primaryColor } from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import VendorFoodItem from "./VendorFoodItem";
 import SearchBar from "../common/SearchBar";
-
-const UserContext = createContext();
+import UserContext from "./UserContext.js";
 
 const VendorFoodListing = ({ route }) => {
   const { vendorId, vendorName, vendorRating, vendorUrl } = route.params;
@@ -54,7 +53,7 @@ const VendorFoodListing = ({ route }) => {
   );
 };
 
-export {VendorFoodListing as default, UserContext};
+export default VendorFoodListing;
 
 const vendorFoodListingStyle = StyleSheet.create({
   titleContainer: {

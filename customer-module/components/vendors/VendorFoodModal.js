@@ -14,7 +14,7 @@ import styles, { primaryColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom";
 import Hr from "../common/Hr";
 import { auth, createCartItem } from "../../firebase";
-import { UserContext } from "./VendorFoodListing";
+import UserContext from "./UserContext";
 
 const VendorFoodModal = (props) => {
   const vendorId = useContext(UserContext);
