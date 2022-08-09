@@ -16,13 +16,13 @@ const FoodItem = (props) => {
     fbGetDownloadURL(props.url, setImageUrl);
   }, []);
 
-  const handleViewFood = () => {
-    nav.navigate("Food Details", {
-      foodName: props.foodName,
-      foodPrice: props.foodPrice,
-      foodUrl: imageUrl,
-    });
-  };
+  // const handleViewFood = () => {
+  //   nav.navigate("Food Details", {
+  //     foodName: props.foodName,
+  //     foodPrice: props.foodPrice,
+  //     foodUrl: imageUrl,
+  //   });
+  // };
 
   const handleEditFood = () => {
     nav.navigate("Food Edit", {
@@ -42,9 +42,9 @@ const FoodItem = (props) => {
   return (
     <Pressable
       style={styles.foodItemContainer}
-      onPress={() => {
-        handleViewFood();
-      }}
+      // onPress={() => {
+      //   handleViewFood();
+      // }}
     >
       <ImageBackground
         style={styles.foodItemImage}

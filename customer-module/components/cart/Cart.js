@@ -15,16 +15,25 @@ import styles, { secondaryColor, accentColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom.js";
 import CartItem from "./CartItem";
 import Hr from "../common/Hr";
-import { auth, getCartList } from "../../firebase";
+import { auth, deleteAllCartItems, getCartList } from "../../firebase";
 
 const Cart = (props) => {
   const isFocused = useIsFocused();
-  const [cartList, setCartList] = useState(null);
+  const [cartList, setCartList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    getCartList(auth.currentUser.email, setCartList, setTotalPrice);
+    getCartList(setCartList, setTotalPrice);
   }, [isFocused]);
+
+  const handleConfirm = () => {
+    props.setVisible(false);
+
+    deleteAllCartItems().then(() => {
+      getCartList(setCartList, setTotalPrice);
+      alert("Items Deleted!");
+    });
+  };
 
   return (
     <Modal
@@ -50,9 +59,9 @@ const Cart = (props) => {
             <Text style={{ marginBottom: 10, fontWeight: "bold" }}>
               Order List
             </Text>
-            {cartList == null ? (
+            {cartList.length < 1 ? (
               <Text style={{ marginBottom: 5, fontStyle: "italic" }}>
-                Cart is empty, add something to the cart!
+                Cart is empty, place something in the cart!
               </Text>
             ) : (
               cartList.map((cItem) => (
@@ -88,7 +97,7 @@ const Cart = (props) => {
               tstyle={styles.modalButtonText}
               content="Place Order"
               callback={() => {
-                props.setVisible(false);
+                handleConfirm();
               }}
             />
           </View>

@@ -8,6 +8,7 @@ import {
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -149,9 +150,9 @@ const createCartItem = async (
   alert(`You added item #${docRef.id} to your cart!`);
 };
 
-const getCartList = async (customerEmail, setCartList, setTotalPrice) => {
+const getCartList = async (setCartList, setTotalPrice) => {
   let querySnapshot = await getDocs(
-    collection(db, "customers", customerEmail, "cart")
+    collection(db, "customers", auth.currentUser.email, "cart")
   );
 
   let cartTemp = [];
@@ -173,6 +174,17 @@ const getCartList = async (customerEmail, setCartList, setTotalPrice) => {
   setTotalPrice(totalPrice)
 };
 
+const deleteAllCartItems = async () => {
+  // Grabs reference of all cart items
+  let querySnapshot = await getDocs(
+    collection(db, "customers", auth.currentUser.email, "cart")
+  );
+  // Iterates through reference of all cart items and deletes them
+  querySnapshot.forEach(async (docRef) => {
+    await deleteDoc(doc(db, "customers", auth.currentUser.email, "cart", docRef.id))
+  })
+}
+
 export {
   auth,
   db,
@@ -184,4 +196,5 @@ export {
   getFoodList,
   createCartItem,
   getCartList,
+  deleteAllCartItems
 };

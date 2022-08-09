@@ -161,5 +161,5 @@ export {
   fbUploadImage,
   fbGetDownloadURL,
   fbUpdateVendorDetails,
-  fbGetVendorDetails,
+  fbGetVendorDetails
 };
