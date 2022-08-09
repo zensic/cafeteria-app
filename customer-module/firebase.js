@@ -135,7 +135,7 @@ const createCartItem = async (
   itemQuantity,
   itemPrice
 ) => {
-  let docRef = await addDoc(
+  await addDoc(
     collection(db, "customers", customerEmail, "cart"),
     {
       vendorEmail: vendorEmail,
@@ -185,6 +185,39 @@ const deleteAllCartItems = async () => {
   })
 }
 
+const addOrders = async (location) => {
+    // Grabs reference of all cart items
+    let querySnapshot = await getDocs(
+      collection(db, "customers", auth.currentUser.email, "cart")
+    );
+    // Iterates through reference of all cart items and deletes them
+    querySnapshot.forEach(async (docRef) => {
+      // Get current date and time
+      let currentdate = new Date(); 
+      let datetime = "Last Sync: " + currentdate.getDate() + "/"
+                      + (currentdate.getMonth()+1)  + "/" 
+                      + currentdate.getFullYear() + " @ "  
+                      + currentdate.getHours() + ":"  
+                      + currentdate.getMinutes() + ":" 
+                      + currentdate.getSeconds();
+
+      await addDoc(collection(db, "orders"), {
+        // Add vendor's orders section
+        vendor: docRef.data().vendorEmail,
+        customer: auth.currentUser.email,
+        location: location,
+        createdAt: datetime,
+        status: "pending",
+        name: docRef.data().itemName,
+        price: docRef.data().itemPrice,
+        quantity: docRef.data().itemQuantity,
+        url: docRef.data().itemUrl
+      });
+
+      await deleteDoc(doc(db, "customers", auth.currentUser.email, "cart", docRef.id));
+    })
+}
+
 export {
   auth,
   db,
@@ -196,5 +229,6 @@ export {
   getFoodList,
   createCartItem,
   getCartList,
-  deleteAllCartItems
+  deleteAllCartItems,
+  addOrders
 };

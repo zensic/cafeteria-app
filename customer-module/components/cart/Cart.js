@@ -5,6 +5,7 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -15,10 +16,11 @@ import styles, { secondaryColor, accentColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom.js";
 import CartItem from "./CartItem";
 import Hr from "../common/Hr";
-import { auth, deleteAllCartItems, getCartList } from "../../firebase";
+import { addOrders, getCartList } from "../../firebase";
 
 const Cart = (props) => {
   const isFocused = useIsFocused();
+  const [location, setLocation] = useState("");
   const [cartList, setCartList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -26,13 +28,20 @@ const Cart = (props) => {
     getCartList(setCartList, setTotalPrice);
   }, [isFocused]);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     props.setVisible(false);
 
-    deleteAllCartItems().then(() => {
-      getCartList(setCartList, setTotalPrice);
-      alert("Items Deleted!");
-    });
+    if (location.length < 1) {
+      alert("Please enter your current location");
+      return 0;
+    }
+
+    // Add cart items to vendor orders
+    await addOrders(location);
+    alert("The vendors have received your order!");
+
+    // Refresh list of cart items
+    getCartList(setCartList, setTotalPrice);
   };
 
   return (
@@ -57,6 +66,15 @@ const Cart = (props) => {
             style={styles.modalContent}
           >
             <Text style={{ marginBottom: 10, fontWeight: "bold" }}>
+              Enter your location
+            </Text>
+            <TextInput
+              style={cartStyles.deliveryContainer}
+              placeholder="Table #123"
+              value={location}
+              onChangeText={(text) => setLocation(text)}
+            />
+            <Text style={{ marginVertical: 10, fontWeight: "bold" }}>
               Order List
             </Text>
             {cartList.length < 1 ? (
