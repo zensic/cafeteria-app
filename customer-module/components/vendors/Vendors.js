@@ -1,9 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import VendorListing from "./VendorListing";
-import VendorFoodListing from "./VendorFoodListing";
-import CartButton from "../common/CartButton";
+import VendorListing from "./VendorListing.js";
+import FoodListing from "./Food/FoodListing.js";
+import CartButton from "../common/CartButton.js";
 
 const Stack = createStackNavigator();
 
@@ -17,7 +17,7 @@ const Vendors = () => {
       />
       <Stack.Screen
         name="Vendor Food Listing"
-        component={VendorFoodListing}
+        component={FoodListing}
         options={{
           headerRight: () => <CartButton />,
         }}

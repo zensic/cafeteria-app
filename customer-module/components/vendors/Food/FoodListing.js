@@ -2,14 +2,14 @@ import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { getFoodList } from "../../firebase.js";
-import styles, { primaryColor } from "../../styles/styles";
-import CenterWrapper from "../common/CenterWrapper";
-import VendorFoodItem from "./VendorFoodItem";
-import SearchBar from "../common/SearchBar";
-import UserContext from "./UserContext.js";
+import { getFoodList } from "../../../firebase.js";
+import styles, { primaryColor }  from "../../../styles/styles.js";
+import CenterWrapper from "../../common/CenterWrapper.js";
+import FoodItem from "./FoodItem.js";
+import SearchBar from "../../common/SearchBar.js";
+import UserContext from "../UserContext.js";
 
-const VendorFoodListing = ({ route }) => {
+const FoodListing = ({ route }) => {
   const { vendorId, vendorName, vendorRating, vendorUrl } = route.params;
   const [foodList, setFoodList] = useState(() => []);
 
@@ -23,7 +23,7 @@ const VendorFoodListing = ({ route }) => {
         style={styles.foodBannerImage}
         source={
           !vendorUrl || vendorUrl == ""
-            ? require("../../assets/images/food-1.jpg")
+            ? require("../../../assets/images/food-1.jpg")
             : { uri: vendorUrl }
         }
       />
@@ -38,7 +38,7 @@ const VendorFoodListing = ({ route }) => {
         <SearchBar placeholder="Search food name.." />
         <UserContext.Provider value={vendorId}>
           {foodList.map((item) => (
-            <VendorFoodItem
+            <FoodItem
               key={item[0]}
               foodId={item[0]}
               url={item[1]}
@@ -53,7 +53,7 @@ const VendorFoodListing = ({ route }) => {
   );
 };
 
-export default VendorFoodListing;
+export default FoodListing;
 
 const vendorFoodListingStyle = StyleSheet.create({
   titleContainer: {

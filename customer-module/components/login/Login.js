@@ -26,6 +26,7 @@ const Login = () => {
         // User is signed out
       }
     });
+    console.log("called");
   });
 
   const handleSignUp = () => {

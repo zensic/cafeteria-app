@@ -27,9 +27,9 @@ const Home = () => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? "";
 
           // If child route (in stack navigator) is on vendor food listing, disable header
-          // Else only add cart buttons 
+          // Else only add cart buttons
           if (routeName == "Vendor Food Listing")
-            return { headerShown: false, headerRight: () => <CartButton /> };
+            return { headerShown: false };
           return { headerRight: () => <CartButton /> };
         }}
       />
