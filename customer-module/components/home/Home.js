@@ -4,7 +4,7 @@ import React from "react";
 import Vendors from "../vendors/Vendors";
 import Profile from "../profile/Profile";
 import Orders from "../orders/Orders";
-import CartButton from "../common/CartButton";
+import CartButton from "../cart/CartButton";
 import { primaryColor, secondaryColor, accentColor } from "../../styles/styles";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
@@ -28,7 +28,7 @@ const Home = () => {
 
           // If child route (in stack navigator) is on vendor food listing, disable header
           // Else only add cart buttons
-          if (routeName == "Vendor Food Listing")
+          if (routeName == "Food Listing")
             return { headerShown: false };
           return { headerRight: () => <CartButton /> };
         }}

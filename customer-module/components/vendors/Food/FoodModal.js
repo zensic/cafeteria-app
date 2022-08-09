@@ -20,8 +20,9 @@ const FoodModal = (props) => {
   const vendorId = useContext(UserContext);
   const [quantity, setQuantity] = useState(1);
 
-  const handleSubmit = () => {
-    createCartItem(
+  const handleSubmit = async () => {
+    // Generate cart item in firebase
+    await createCartItem(
       auth.currentUser.email,
       vendorId,
       props.foodId,
@@ -30,6 +31,9 @@ const FoodModal = (props) => {
       quantity,
       props.foodPrice
     );
+
+    // Closes modal upon submit
+    props.setVisible(false);
   };
 
   const handlePlus = () => {

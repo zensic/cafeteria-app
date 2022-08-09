@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 import { primaryColor } from "../../styles/styles";
-import Cart from "../cart/Cart";
+import Cart from "./Cart";
 
 const CartButton = () => {
 

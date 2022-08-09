@@ -15,7 +15,7 @@ const VendorItem = (props) => {
   }, []);
 
   const handlePress = () => {
-    nav.navigate("Vendor Food Listing", {
+    nav.navigate("Food Listing", {
       vendorId: props.id,
       vendorName: props.name,
       vendorRating: props.rating,
