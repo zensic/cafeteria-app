@@ -33,12 +33,12 @@ const FoodItem = (props) => {
             : { uri: imageUrl }
         }
       >
-        <View style={styles.foodItemImageContainer}>
+        {/* <View style={styles.foodItemImageContainer}>
           <Text style={styles.foodItemStar}>
             {props.foodRating}{" "}
             <FontAwesome name="star" size={16} color="white" />
           </Text>
-        </View>
+        </View> */}
       </ImageBackground>
       <View style={styles.foodItemTitle}>
         <Text>{props.foodName} </Text>

@@ -5,6 +5,7 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import { primaryColor } from "../../styles/styles";
 import { fbGetDownloadURL } from "../../firebase";
+import Hr from "../common/Hr";
 
 const VendorItem = (props) => {
   const nav = useNavigation();
@@ -35,10 +36,10 @@ const VendorItem = (props) => {
       />
       <View style={vendorItemStyle.textContainer}>
         <Text style={vendorItemStyle.text}>{props.name}</Text>
-        <Text style={vendorItemStyle.text}>
+        {/* <Text style={vendorItemStyle.text}>
           {props.rating}{" "}
           <FontAwesome name="star" size={16} color={primaryColor} />
-        </Text>
+        </Text> */}
       </View>
       <Text>{props.desc}</Text>
     </Pressable>

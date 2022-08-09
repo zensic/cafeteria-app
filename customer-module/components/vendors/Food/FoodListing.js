@@ -30,10 +30,10 @@ const FoodListing = ({ route }) => {
       <CenterWrapper>
         <View style={vendorFoodListingStyle.titleContainer}>
           <Text style={vendorFoodListingStyle.title}>{vendorName}</Text>
-          <Text style={vendorFoodListingStyle.title}>
+          {/* <Text style={vendorFoodListingStyle.title}>
             {vendorRating}{" "}
             <FontAwesome name="star" size={16} color={primaryColor} />
-          </Text>
+          </Text> */}
         </View>
         <SearchBar placeholder="Search food name.." />
         <UserContext.Provider value={vendorId}>
