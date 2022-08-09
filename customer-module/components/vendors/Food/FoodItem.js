@@ -29,7 +29,7 @@ const FoodItem = (props) => {
         style={styles.foodItemImage}
         source={
           !imageUrl || imageUrl == ""
-            ? require("../../../assets/images/food-1.jpg")
+            ? require("../../../assets/images/no-image.jpg")
             : { uri: imageUrl }
         }
       >

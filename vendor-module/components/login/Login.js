@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, fbSignUp, fbSignIn } from "../../firebase.js";
 
@@ -15,7 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties

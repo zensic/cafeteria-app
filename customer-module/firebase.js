@@ -147,7 +147,7 @@ const createCartItem = async (
     }
   );
 
-  alert(`You added item #${docRef.id} to your cart!`);
+  alert(`You added ${itemQuantity} ${itemName} to your cart!`);
 };
 
 const getCartList = async (setCartList, setTotalPrice) => {

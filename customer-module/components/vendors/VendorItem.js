@@ -30,7 +30,7 @@ const VendorItem = (props) => {
         style={vendorItemStyle.image}
         source={
           !imageUrl || imageUrl == ""
-            ? require("../../assets/images/food-1.jpg")
+            ? require("../../assets/images/no-image.jpg")
             : { uri: imageUrl }
         }
       />
