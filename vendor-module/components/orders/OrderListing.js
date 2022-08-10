@@ -36,6 +36,7 @@ const OrderListing = ({ navigation }) => {
             id={order.id}
             location={order.location}
             name={order.name}
+            price={order.price}
             quantity={order.quantity}
             createdAt={order.createdAt}
           />
@@ -51,6 +52,7 @@ const OrderListing = ({ navigation }) => {
             id={order.id}
             location={order.location}
             name={order.name}
+            price={order.price}
             quantity={order.quantity}
             createdAt={order.createdAt}
           />

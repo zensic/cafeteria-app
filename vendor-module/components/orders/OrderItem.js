@@ -29,7 +29,7 @@ const OrderItem = (props) => {
       <View style={{ marginLeft: 10 }}>
         <Text>ID #{props.id}</Text>
         <Text>{props.location}</Text>
-        <Text>{`${props.name} x${props.quantity}`}</Text>
+        <Text>{`${props.name} x${props.quantity} RM${props.price*props.quantity}`}</Text>
         <Text>{props.createdAt}</Text>
       </View>
     </Pressable>
