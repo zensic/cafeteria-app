@@ -19,7 +19,7 @@ const OrderListing = ({ navigation }) => {
   }, [navigation.isFocused]);
 
   const handleView = (orderItem, showConfirm) => {
-    navigation.navigate("Order Details", {
+    navigation.push("Order Details", {
       order: orderItem,
       showConfirm: showConfirm,
     });

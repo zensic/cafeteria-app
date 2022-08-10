@@ -220,6 +220,45 @@ const fbCompleteOrder = async (id) => {
   });
 } 
 
+// const fbGetGraph = async (setData) => {
+//   let q = query(
+//     collection(db, "orders"),
+//     where("vendor", "==", auth.currentUser.email),
+//     where("status", "==", "completed")
+//   );
+
+//   let labelArray = [];
+//   let dataArray = [];
+//   let orders = await getDocs(q);
+
+//   let ordersTemp = [];
+
+//   orders.forEach((doc) => {
+//     if (!label.includes(doc.data().name)) {
+//       labelArray.push(doc.data().name)
+//     }
+//     dataArray[labelArray.indexOf(doc.data().name)] = 
+//   })
+
+//   orders.forEach((doc) => {
+//     if (!label.Array(doc.data().name)) {
+//       labelArray.push(doc.data().name)
+//     }
+//   })
+//     // ordersTemp.push({
+//     //   id: doc.id,
+//     //   createdAt: doc.data().createdAt,
+//     //   customer: doc.data().customer,
+//     //   location: doc.data().location,
+//     //   name: doc.data().name,
+//     //   price: doc.data().price,
+//     //   quantity: doc.data().quantity,
+//     //   status: doc.data().status,
+//     //   url: doc.data().url,
+//     //   vendor: doc.data().vendor,
+//     // });
+// }
+
 export {
   auth,
   db,
@@ -232,5 +271,6 @@ export {
   fbGetVendorDetails,
   fbGetOrders,
   fbGetPastOrders,
-  fbCompleteOrder
+  fbCompleteOrder,
+  fbGetGraph
 };
