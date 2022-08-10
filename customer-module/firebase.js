@@ -240,7 +240,7 @@ const fbGetCurrentOrders = async (setOrderList) => {
     });
   });
 
-  console.log("Fetched order data");
+  console.log("Fetched current order data");
   setOrderList(ordersTemp);
 }
 
@@ -271,7 +271,7 @@ const fbGetPastOrders = async (setOrderList) => {
     });
   });
 
-  console.log("Fetched order data");
+  console.log("Fetched past order data");
   setOrderList(ordersTemp);
 }
 

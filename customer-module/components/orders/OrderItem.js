@@ -1,20 +1,34 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { accentColor } from "../../styles/styles";
+import { fbGetDownloadURL } from "../../firebase";
 
 const OrderItem = (props) => {
+
+  const [imageUrl, setImageUrl] = useState("");
+
+  useEffect(() => {
+    console.log(props.url);
+    fbGetDownloadURL(props.url, setImageUrl);
+  }, [])
+
   return (
     <Pressable style={styles.orderContainer}>
       <Image
         style={styles.vendorImage}
-        source={require("../../assets/images/food-1.jpg")}
+        source={
+          !imageUrl || imageUrl == ""
+            ? require("../../assets/images/no-image.jpg")
+            : { uri: imageUrl }
+        }
       />
       <View style={styles.textContainer}>
         <View style={styles.foodTitleContainer}>
-          <Text>{props.foodName}</Text>
-          <Text style={styles.foodTitle}>RM {props.foodPrice}</Text>
+          <Text style={styles.foodTitle}>{props.foodName}</Text>
+          <Text style={styles.foodTitle}>RM {props.foodPrice * props.foodQuantity} ({props.foodQuantity})</Text>
         </View>
+        <Text>ID# {props.orderId}</Text>
         <Text style={styles.date}>{props.date}</Text>
       </View>
     </Pressable>

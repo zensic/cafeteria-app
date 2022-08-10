@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import CenterWrapper from "../common/CenterWrapper";
 import OrderItem from "./OrderItem";
-import Hr from "../common/Hr";
 import { fbGetCurrentOrders, fbGetPastOrders } from "../../firebase";
+import { useIsFocused } from "@react-navigation/native";
 
-const OrderListing = ({ navigation }) => {
+const OrderListing = () => {
   const [orderList, setOrderList] = useState(() => []);
   const [pastOrderList, setPastOrderList] = useState(() => []);
-  const isFocused = navigation.isFocused();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     fbGetCurrentOrders(setOrderList);
@@ -25,20 +25,26 @@ const OrderListing = ({ navigation }) => {
       {orderList.map((order) => (
         <OrderItem
           key={order.id}
+          orderId={order.id}
           vendorName={order.vendor}
           foodName={order.name}
           foodPrice={order.price}
+          foodQuantity={order.quantity}
           date={order.createdAt}
+          url={order.url}
         />
       ))}
-      <Text style={styles.orderTitle}>Past Orders</Text>
+      <Text style={styles.orderTitle}>Completed Orders</Text>
       {pastOrderList.map((order) => (
         <OrderItem
           key={order.id}
+          orderId={order.id}
           vendorName={order.vendor}
           foodName={order.name}
           foodPrice={order.price}
+          foodQuantity={order.quantity}
           date={order.createdAt}
+          url={order.url}
         />
       ))}
     </CenterWrapper>

@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons";
-
-import { primaryColor } from "../../styles/styles";
 import { fbGetDownloadURL } from "../../firebase";
-import Hr from "../common/Hr";
 
 const VendorItem = (props) => {
   const nav = useNavigation();
