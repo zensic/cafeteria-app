@@ -1,33 +1,58 @@
 import { View, Text } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 import styles from "../../styles/styles";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton";
 import OrderField from "./OrderField";
+import { fbCompleteOrder } from "../../firebase";
 
-const OrderDetails = () => {
-  const handleReady = () => {};
-  const handleCancel = () => {};
+const OrderDetails = ({ route }) => {
+  const { order } = route.params;
+  const navigation = useNavigation();
+
+  const handleReady = () => {
+    fbCompleteOrder(order.id).then(() => {
+      alert(`Order #${order.id} completed!`)
+      navigation.goBack();
+    })
+
+  };
+  // const handleCancel = () => {};
+
+  if (route.params.showConfirm != "true") {
+    return (
+      <CenterWrapper>
+        <OrderField orderLabel={"Order Id"} orderValue={order.id} />
+        <OrderField orderLabel={"Username"} orderValue={order.customer} />
+        <OrderField orderLabel={"Food name"} orderValue={order.name} />
+        <OrderField orderLabel={"Quantity"} orderValue={order.quantity} />
+        <OrderField orderLabel={"Food price"} orderValue={order.price} />
+        <OrderField orderLabel={"Order Time"} orderValue={order.createdAt} />
+      </CenterWrapper>
+    );
+  }
 
   return (
     <CenterWrapper>
-      <OrderField orderLabel={"Order number"} orderValue={"#123456"} />
-      <OrderField orderLabel={"Food name"} orderValue={"Pisang goreng"} />
-      <OrderField orderLabel={"Food price"} orderValue={"RM10.00"} />
-      <OrderField orderLabel={"Order Time"} orderValue={"1.00 pm"} />
-      <OrderField orderLabel={"Quantity"} orderValue={"1"} />
-      <OrderField orderLabel={"Username"} orderValue={"meegoreng@mail.com"} />
+      <OrderField orderLabel={"Order Id"} orderValue={order.id} />
+      <OrderField orderLabel={"Username"} orderValue={order.customer} />
+      <OrderField orderLabel={"Food name"} orderValue={order.name} />
+      <OrderField orderLabel={"Quantity"} orderValue={order.quantity} />
+      <OrderField orderLabel={"Food price"} orderValue={order.price} />
+      <OrderField orderLabel={"Order Time"} orderValue={order.createdAt} />
+
       <CustomButton
         callback={handleReady}
-        content={"Order Ready"}
+        content={"Complete Order"}
         cstyle={styles.button}
       />
-      <CustomButton
+      {/* <CustomButton
         callback={handleCancel}
         content={"Cancel Order"}
         cstyle={styles.buttonSecondary}
-      />
+      /> */}
     </CenterWrapper>
   );
 };
