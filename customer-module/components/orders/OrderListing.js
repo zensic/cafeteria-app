@@ -1,19 +1,44 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CenterWrapper from "../common/CenterWrapper";
 import OrderItem from "./OrderItem";
+import Hr from "../common/Hr";
+import { fbGetCurrentOrders, fbGetPastOrders } from "../../firebase";
 
-const OrderListing = () => {
+const OrderListing = ({ navigation }) => {
+  const [orderList, setOrderList] = useState(() => []);
+  const [pastOrderList, setPastOrderList] = useState(() => []);
+  const isFocused = navigation.isFocused();
+
+  useEffect(() => {
+    fbGetCurrentOrders(setOrderList);
+    fbGetPastOrders(setPastOrderList);
+  }, [isFocused]);
+
+  // useEffect(() => {
+
+  // }, [isFocused]);
+
   return (
     <CenterWrapper>
+      <Text style={styles.orderTitle}>Current Orders</Text>
+      {orderList.map((order) => (
+        <OrderItem
+          key={order.id}
+          vendorName={order.vendor}
+          foodName={order.name}
+          foodPrice={order.price}
+          date={order.createdAt}
+        />
+      ))}
       <Text style={styles.orderTitle}>Past Orders</Text>
-      {data.orders.map((order) => (
-        <OrderItem 
-          key={order.id} 
-          vendorName={order.vendorName}
-          foodName={order.foodName}
-          foodPrice={order.foodPrice}
-          date={order.date}
+      {pastOrderList.map((order) => (
+        <OrderItem
+          key={order.id}
+          vendorName={order.vendor}
+          foodName={order.name}
+          foodPrice={order.price}
+          date={order.createdAt}
         />
       ))}
     </CenterWrapper>
@@ -26,32 +51,6 @@ const styles = StyleSheet.create({
   orderTitle: {
     marginTop: 10,
     fontWeight: "bold",
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
-
-const data = {
-  orders: [
-    {
-      id: 1,
-      vendorName: "ABC vendor",
-      foodName: "Nasi Lemak",
-      foodPrice: 8.99,
-      date: "13-06-2022",
-    },
-    {
-      id: 2,
-      vendorName: "XYZ vendor",
-      foodName: "Cendol",
-      foodPrice: 2.99,
-      date: "12-06-2022",
-    },
-    {
-      id: 3,
-      vendorName: "Baa vendor",
-      foodName: "Fried Rice",
-      foodPrice: 3.99,
-      date: "11-06-2022",
-    },
-  ],
-};

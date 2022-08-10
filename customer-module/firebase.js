@@ -171,7 +171,7 @@ const getCartList = async (setCartList, setTotalPrice) => {
     totalPrice += truePrice;
   });
   setCartList(cartTemp);
-  setTotalPrice(totalPrice)
+  setTotalPrice(totalPrice.toFixed(2));
 };
 
 const deleteAllCartItems = async () => {
@@ -194,12 +194,7 @@ const addOrders = async (location) => {
     querySnapshot.forEach(async (docRef) => {
       // Get current date and time
       let currentdate = new Date(); 
-      let datetime = "Last Sync: " + currentdate.getDate() + "/"
-                      + (currentdate.getMonth()+1)  + "/" 
-                      + currentdate.getFullYear() + " @ "  
-                      + currentdate.getHours() + ":"  
-                      + currentdate.getMinutes() + ":" 
-                      + currentdate.getSeconds();
+      let datetime = currentdate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
       await addDoc(collection(db, "orders"), {
         // Add vendor's orders section
@@ -218,6 +213,69 @@ const addOrders = async (location) => {
     })
 }
 
+const fbGetCurrentOrders = async (setOrderList) => {
+  // let orders =  await getDocs(collection(db, "orders"), where("customer", "==", auth.currentUser.email));
+
+  let q = query(
+    collection(db, "orders"),
+    where("customer", "==", auth.currentUser.email),
+    where("status", "==", "pending")
+  );
+
+  let orders = await getDocs(q);
+
+  let ordersTemp = [];
+  orders.forEach((doc) => {
+    ordersTemp.push({
+      id: doc.id,
+      createdAt: doc.data().createdAt,
+      customer: doc.data().customer,
+      location: doc.data().location,
+      name: doc.data().name,
+      price: doc.data().price,
+      quantity: doc.data().quantity,
+      status: doc.data().status,
+      url: doc.data().url,
+      vendor: doc.data().vendor,
+    });
+  });
+
+  console.log("Fetched order data");
+  setOrderList(ordersTemp);
+}
+
+const fbGetPastOrders = async (setOrderList) => {
+  // let orders =  await getDocs(collection(db, "orders"), where("customer", "==", auth.currentUser.email));
+
+  let q = query(
+    collection(db, "orders"),
+    where("customer", "==", auth.currentUser.email),
+    where("status", "==", "complete")
+  );
+
+  let orders = await getDocs(q);
+
+  let ordersTemp = [];
+  orders.forEach((doc) => {
+    ordersTemp.push({
+      id: doc.id,
+      createdAt: doc.data().createdAt,
+      customer: doc.data().customer,
+      location: doc.data().location,
+      name: doc.data().name,
+      price: doc.data().price,
+      quantity: doc.data().quantity,
+      status: doc.data().status,
+      url: doc.data().url,
+      vendor: doc.data().vendor,
+    });
+  });
+
+  console.log("Fetched order data");
+  setOrderList(ordersTemp);
+}
+
+
 export {
   auth,
   db,
@@ -230,5 +288,7 @@ export {
   createCartItem,
   getCartList,
   deleteAllCartItems,
-  addOrders
+  addOrders,
+  fbGetCurrentOrders,
+  fbGetPastOrders
 };

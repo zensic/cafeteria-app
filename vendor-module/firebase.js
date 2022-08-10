@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, getFirestore, setDoc, collection, where, query } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import firebaseConfig from "./firebase.config";
 import uuid from "react-native-uuid";
@@ -152,6 +152,37 @@ const fbGetVendorDetails = async (
   console.log("Fetched vendor details");
 };
 
+const fbGetOrders = async (setOrderList) => {
+  // let orders =  await getDocs(collection(db, "orders"), where("vendor", "==", auth.currentUser.email));
+
+  let q = query(
+    collection(db, "orders"),
+    where("vendor", "==", auth.currentUser.email),
+    where("status", "==", "pending")
+  );
+
+  let orders = await getDocs(q);
+
+  let ordersTemp = [];
+  orders.forEach((doc) => {
+    ordersTemp.push({
+      id: doc.id,
+      createdAt: doc.data().createdAt,
+      customer: doc.data().customer,
+      location: doc.data().location,
+      name: doc.data().name,
+      price: doc.data().price,
+      quantity: doc.data().quantity,
+      status: doc.data().status,
+      url: doc.data().url,
+      vendor: doc.data().vendor,
+    });
+  });
+
+  console.log("Fetched order data");
+  setOrderList(ordersTemp);
+}
+
 export {
   auth,
   db,
@@ -161,5 +192,6 @@ export {
   fbUploadImage,
   fbGetDownloadURL,
   fbUpdateVendorDetails,
-  fbGetVendorDetails
+  fbGetVendorDetails,
+  fbGetOrders
 };

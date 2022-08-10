@@ -29,12 +29,13 @@ const Cart = (props) => {
   }, [isFocused]);
 
   const handleConfirm = async () => {
-    props.setVisible(false);
-
+    // Validate location field
     if (location.length < 1) {
       alert("Please enter your current location");
       return 0;
     }
+
+    props.setVisible(false);
 
     // Add cart items to vendor orders
     await addOrders(location);

@@ -1,13 +1,22 @@
-import { Text, Pressable } from "react-native";
-import React from "react";
+import { Text, Pressable, View } from "react-native";
+import React, { useEffect, useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 import styles from "../../styles/styles.js";
 import CenterWrapper from "../common/CenterWrapper";
 import CustomButton from "../common/CustomButton.js";
 import { ScrollView } from "react-native-gesture-handler";
+import useAsync from "../common/useAsync";
+import Hr from "../common/Hr";
+import { fbGetOrders } from "../../firebase.js";
 
 const OrderListing = ({ navigation }) => {
+  const [orderList, setOrderList] = useState(() => []);
+
+  useEffect(() => {
+    fbGetOrders(setOrderList);
+  }, []);
+
   const handleHistory = () => {
     navigation.navigate("Order History");
   };
@@ -19,12 +28,7 @@ const OrderListing = ({ navigation }) => {
   return (
     <CenterWrapper>
       <ScrollView>
-        <CustomButton
-          callback={handleHistory}
-          content={"View Order History"}
-          cstyle={styles.button}
-        />
-        {data.orders.map((order) => (
+        {orderList.map((order) => (
           <Pressable
             style={styles.orderItem}
             onPress={() => {
@@ -33,30 +37,16 @@ const OrderListing = ({ navigation }) => {
             key={order.id}
           >
             <FontAwesome5 name="clipboard" size={24} color="black" />
-            <Text
-              style={{ marginLeft: 10 }}
-            >{`Order #${order.id} ${order.status} ${order.time}`}</Text>
+            <View style={{ marginLeft: 10 }}>
+              <Text>{`#${order.createdAt}`}</Text>
+              <Text>{`${order.customer} ${order.location}`}</Text>
+              <Text>{`${order.name} x${order.quantity}`}</Text>
+            </View>
           </Pressable>
         ))}
       </ScrollView>
+      <Text style={{ fontWeight: "bold", fontSize: 16, marginVertical: 10 }}>Completed Orders</Text>
     </CenterWrapper>
   );
 };
-
 export default OrderListing;
-
-// "Fake" API data
-const data = {
-  orders: [
-    {
-      id: 1,
-      status: "Placed",
-      time: "1:30 pm",
-    },
-    {
-      id: 2,
-      status: "Placed",
-      time: "1:35 pm",
-    },
-  ],
-};

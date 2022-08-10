@@ -116,6 +116,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: accentColor,
   },
+  hr: {
+    borderBottomWidth: 1,
+    borderBottomColor: `${primaryColor}`,
+  },
 });
 
 export { primaryColor, secondaryColor, accentColor };

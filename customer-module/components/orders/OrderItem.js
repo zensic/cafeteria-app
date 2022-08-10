@@ -12,10 +12,9 @@ const OrderItem = (props) => {
       />
       <View style={styles.textContainer}>
         <View style={styles.foodTitleContainer}>
-          <Text style={styles.foodTitle}>{props.vendorName}</Text>
+          <Text>{props.foodName}</Text>
           <Text style={styles.foodTitle}>RM {props.foodPrice}</Text>
         </View>
-        <Text>{props.foodName}</Text>
         <Text style={styles.date}>{props.date}</Text>
       </View>
     </Pressable>
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginLeft: 10,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   vendorImage: {
     height: 100,

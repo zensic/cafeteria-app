@@ -42,7 +42,7 @@ const ProfileDetails = ({ navigation }) => {
     if (imageUrl != "") {
       fbGetDownloadURL(imageUrl, setImagePath);
     }
-  }, [imageUrl])
+  }, [imageUrl]);
 
   return (
     <View>
