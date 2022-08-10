@@ -10,18 +10,19 @@ import {
 import React, { useContext, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 
-import styles, { primaryColor } from "../../styles/styles";
-import CustomButton from "../common/CustomButtom";
-import Hr from "../common/Hr";
-import { auth, createCartItem } from "../../firebase";
-import { UserContext } from "./VendorFoodListing";
+import styles, { primaryColor } from "../../../styles/styles";
+import CustomButton from "../../common/CustomButtom";
+import Hr from "../../common/Hr";
+import { auth, createCartItem } from "../../../firebase";
+import UserContext from "../UserContext";
 
-const VendorFoodModal = (props) => {
+const FoodModal = (props) => {
   const vendorId = useContext(UserContext);
   const [quantity, setQuantity] = useState(1);
 
-  const handleSubmit = () => {
-    createCartItem(
+  const handleSubmit = async () => {
+    // Generate cart item in firebase
+    await createCartItem(
       auth.currentUser.email,
       vendorId,
       props.foodId,
@@ -30,6 +31,9 @@ const VendorFoodModal = (props) => {
       quantity,
       props.foodPrice
     );
+
+    // Closes modal upon submit
+    props.setVisible(false);
   };
 
   const handlePlus = () => {
@@ -61,7 +65,7 @@ const VendorFoodModal = (props) => {
             style={styles.foodBannerImage}
             source={
               !props.foodUrl || props.foodUrl == ""
-                ? require("../../assets/images/food-1.jpg")
+                ? require("../../../assets/images/food-1.jpg")
                 : { uri: props.foodUrl }
             }
           />
@@ -105,7 +109,7 @@ const VendorFoodModal = (props) => {
   );
 };
 
-export default VendorFoodModal;
+export default FoodModal;
 
 const foodModalStyles = StyleSheet.create({
   titleContainer: {

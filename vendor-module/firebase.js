@@ -5,22 +5,13 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, getFirestore, setDoc, collection, where, query } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import firebaseConfig from "./firebase.config";
 import uuid from "react-native-uuid";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyB662_Fc1CowlT6Dyd_igscmNsxmLU_aGY",
-  authDomain: "cafeteria-app-1b669.firebaseapp.com",
-  projectId: "cafeteria-app-1b669",
-  storageBucket: "cafeteria-app-1b669.appspot.com",
-  messagingSenderId: "736199130968",
-  appId: "1:736199130968:web:07f7245044db26dd0d6f2d",
-};
 
 // Initialize Firebase, check whether FireBase has been init
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -147,7 +138,7 @@ const fbGetVendorDetails = async (
   setImageUrl,
   setName,
   setDescription,
-  setLocation
+  setLocation,
 ) => {
   const docRef = doc(db, "vendors", auth.currentUser.email);
   const vendorDetails = await getDoc(docRef);
@@ -161,6 +152,37 @@ const fbGetVendorDetails = async (
   console.log("Fetched vendor details");
 };
 
+const fbGetOrders = async (setOrderList) => {
+  // let orders =  await getDocs(collection(db, "orders"), where("vendor", "==", auth.currentUser.email));
+
+  let q = query(
+    collection(db, "orders"),
+    where("vendor", "==", auth.currentUser.email),
+    where("status", "==", "pending")
+  );
+
+  let orders = await getDocs(q);
+
+  let ordersTemp = [];
+  orders.forEach((doc) => {
+    ordersTemp.push({
+      id: doc.id,
+      createdAt: doc.data().createdAt,
+      customer: doc.data().customer,
+      location: doc.data().location,
+      name: doc.data().name,
+      price: doc.data().price,
+      quantity: doc.data().quantity,
+      status: doc.data().status,
+      url: doc.data().url,
+      vendor: doc.data().vendor,
+    });
+  });
+
+  console.log("Fetched order data");
+  setOrderList(ordersTemp);
+}
+
 export {
   auth,
   db,
@@ -171,4 +193,5 @@ export {
   fbGetDownloadURL,
   fbUpdateVendorDetails,
   fbGetVendorDetails,
+  fbGetOrders
 };

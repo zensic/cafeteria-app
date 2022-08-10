@@ -8,6 +8,7 @@ import {
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -17,18 +18,9 @@ import {
   where,
 } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import firebaseConfig from "./firebase.config";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyB662_Fc1CowlT6Dyd_igscmNsxmLU_aGY",
-  authDomain: "cafeteria-app-1b669.firebaseapp.com",
-  projectId: "cafeteria-app-1b669",
-  storageBucket: "cafeteria-app-1b669.appspot.com",
-  messagingSenderId: "736199130968",
-  appId: "1:736199130968:web:07f7245044db26dd0d6f2d",
-};
 
 // Initialize Firebase, check whether FireBase has been init
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -143,7 +135,7 @@ const createCartItem = async (
   itemQuantity,
   itemPrice
 ) => {
-  let docRef = await addDoc(
+  await addDoc(
     collection(db, "customers", customerEmail, "cart"),
     {
       vendorEmail: vendorEmail,
@@ -155,12 +147,12 @@ const createCartItem = async (
     }
   );
 
-  alert(`You added item #${docRef.id} to your cart!`);
+  alert(`You added ${itemQuantity} ${itemName} to your cart!`);
 };
 
-const getCartList = async (customerEmail, setCartList, setTotalPrice) => {
+const getCartList = async (setCartList, setTotalPrice) => {
   let querySnapshot = await getDocs(
-    collection(db, "customers", customerEmail, "cart")
+    collection(db, "customers", auth.currentUser.email, "cart")
   );
 
   let cartTemp = [];
@@ -179,8 +171,110 @@ const getCartList = async (customerEmail, setCartList, setTotalPrice) => {
     totalPrice += truePrice;
   });
   setCartList(cartTemp);
-  setTotalPrice(totalPrice)
+  setTotalPrice(totalPrice.toFixed(2));
 };
+
+const deleteAllCartItems = async () => {
+  // Grabs reference of all cart items
+  let querySnapshot = await getDocs(
+    collection(db, "customers", auth.currentUser.email, "cart")
+  );
+  // Iterates through reference of all cart items and deletes them
+  querySnapshot.forEach(async (docRef) => {
+    await deleteDoc(doc(db, "customers", auth.currentUser.email, "cart", docRef.id))
+  })
+}
+
+const addOrders = async (location) => {
+    // Grabs reference of all cart items
+    let querySnapshot = await getDocs(
+      collection(db, "customers", auth.currentUser.email, "cart")
+    );
+    // Iterates through reference of all cart items and deletes them
+    querySnapshot.forEach(async (docRef) => {
+      // Get current date and time
+      let currentdate = new Date(); 
+      let datetime = currentdate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+      await addDoc(collection(db, "orders"), {
+        // Add vendor's orders section
+        vendor: docRef.data().vendorEmail,
+        customer: auth.currentUser.email,
+        location: location,
+        createdAt: datetime,
+        status: "pending",
+        name: docRef.data().itemName,
+        price: docRef.data().itemPrice,
+        quantity: docRef.data().itemQuantity,
+        url: docRef.data().itemUrl
+      });
+
+      await deleteDoc(doc(db, "customers", auth.currentUser.email, "cart", docRef.id));
+    })
+}
+
+const fbGetCurrentOrders = async (setOrderList) => {
+  // let orders =  await getDocs(collection(db, "orders"), where("customer", "==", auth.currentUser.email));
+
+  let q = query(
+    collection(db, "orders"),
+    where("customer", "==", auth.currentUser.email),
+    where("status", "==", "pending")
+  );
+
+  let orders = await getDocs(q);
+
+  let ordersTemp = [];
+  orders.forEach((doc) => {
+    ordersTemp.push({
+      id: doc.id,
+      createdAt: doc.data().createdAt,
+      customer: doc.data().customer,
+      location: doc.data().location,
+      name: doc.data().name,
+      price: doc.data().price,
+      quantity: doc.data().quantity,
+      status: doc.data().status,
+      url: doc.data().url,
+      vendor: doc.data().vendor,
+    });
+  });
+
+  console.log("Fetched current order data");
+  setOrderList(ordersTemp);
+}
+
+const fbGetPastOrders = async (setOrderList) => {
+  // let orders =  await getDocs(collection(db, "orders"), where("customer", "==", auth.currentUser.email));
+
+  let q = query(
+    collection(db, "orders"),
+    where("customer", "==", auth.currentUser.email),
+    where("status", "==", "complete")
+  );
+
+  let orders = await getDocs(q);
+
+  let ordersTemp = [];
+  orders.forEach((doc) => {
+    ordersTemp.push({
+      id: doc.id,
+      createdAt: doc.data().createdAt,
+      customer: doc.data().customer,
+      location: doc.data().location,
+      name: doc.data().name,
+      price: doc.data().price,
+      quantity: doc.data().quantity,
+      status: doc.data().status,
+      url: doc.data().url,
+      vendor: doc.data().vendor,
+    });
+  });
+
+  console.log("Fetched past order data");
+  setOrderList(ordersTemp);
+}
+
 
 export {
   auth,
@@ -193,4 +287,8 @@ export {
   getFoodList,
   createCartItem,
   getCartList,
+  deleteAllCartItems,
+  addOrders,
+  fbGetCurrentOrders,
+  fbGetPastOrders
 };

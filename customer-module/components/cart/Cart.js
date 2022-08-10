@@ -5,6 +5,7 @@ import {
   Modal,
   Pressable,
   ScrollView,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -15,16 +16,34 @@ import styles, { secondaryColor, accentColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButtom.js";
 import CartItem from "./CartItem";
 import Hr from "../common/Hr";
-import { auth, getCartList } from "../../firebase";
+import { addOrders, getCartList } from "../../firebase";
 
 const Cart = (props) => {
   const isFocused = useIsFocused();
-  const [cartList, setCartList] = useState(null);
+  const [location, setLocation] = useState("");
+  const [cartList, setCartList] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    getCartList(auth.currentUser.email, setCartList, setTotalPrice);
+    getCartList(setCartList, setTotalPrice);
   }, [isFocused]);
+
+  const handleConfirm = async () => {
+    // Validate location field
+    if (location.length < 1) {
+      alert("Please enter your current location");
+      return 0;
+    }
+
+    props.setVisible(false);
+
+    // Add cart items to vendor orders
+    await addOrders(location);
+    alert("The vendors have received your order!");
+
+    // Refresh list of cart items
+    getCartList(setCartList, setTotalPrice);
+  };
 
   return (
     <Modal
@@ -48,11 +67,20 @@ const Cart = (props) => {
             style={styles.modalContent}
           >
             <Text style={{ marginBottom: 10, fontWeight: "bold" }}>
+              Enter your location
+            </Text>
+            <TextInput
+              style={cartStyles.deliveryContainer}
+              placeholder="Table #123"
+              value={location}
+              onChangeText={(text) => setLocation(text)}
+            />
+            <Text style={{ marginVertical: 10, fontWeight: "bold" }}>
               Order List
             </Text>
-            {cartList == null ? (
+            {cartList.length < 1 ? (
               <Text style={{ marginBottom: 5, fontStyle: "italic" }}>
-                Cart is empty, add something to the cart!
+                Cart is empty, place something in the cart!
               </Text>
             ) : (
               cartList.map((cItem) => (
@@ -88,7 +116,7 @@ const Cart = (props) => {
               tstyle={styles.modalButtonText}
               content="Place Order"
               callback={() => {
-                props.setVisible(false);
+                handleConfirm();
               }}
             />
           </View>

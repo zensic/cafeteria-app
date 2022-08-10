@@ -2,11 +2,11 @@ import { ImageBackground, Pressable, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
-import styles from "../../styles/styles";
-import VendorFoodModal from "./VendorFoodModal";
-import { fbGetDownloadURL } from "../../firebase";
+import styles from "../../../styles/styles";
+import FoodModal from "./FoodModal";
+import { fbGetDownloadURL } from "../../../firebase";
 
-const VendorFoodItem = (props) => {
+const FoodItem = (props) => {
   const [imageUrl, setImageUrl] = useState("");
   const [visible, setVisible] = React.useState(false);
 
@@ -16,7 +16,7 @@ const VendorFoodItem = (props) => {
 
   return (
     <Pressable onPress={() => setVisible(true)} style={styles.foodItemContainer}>
-      <VendorFoodModal 
+      <FoodModal 
         visible={visible} 
         setVisible={setVisible}
         foodId={props.foodId}
@@ -29,16 +29,16 @@ const VendorFoodItem = (props) => {
         style={styles.foodItemImage}
         source={
           !imageUrl || imageUrl == ""
-            ? require("../../assets/images/food-1.jpg")
+            ? require("../../../assets/images/no-image.jpg")
             : { uri: imageUrl }
         }
       >
-        <View style={styles.foodItemImageContainer}>
+        {/* <View style={styles.foodItemImageContainer}>
           <Text style={styles.foodItemStar}>
             {props.foodRating}{" "}
             <FontAwesome name="star" size={16} color="white" />
           </Text>
-        </View>
+        </View> */}
       </ImageBackground>
       <View style={styles.foodItemTitle}>
         <Text>{props.foodName} </Text>
@@ -48,4 +48,4 @@ const VendorFoodItem = (props) => {
   );
 };
 
-export default VendorFoodItem;
+export default FoodItem;

@@ -1,6 +1,6 @@
 import { View, StyleSheet, ImageBackground, Keyboard } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, fbSignUp, fbSignIn } from "../../firebase.js";
 
@@ -16,16 +16,14 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        nav.replace("home");
-      } else {
-        // User is signed out
-      }
-    });
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      nav.replace("home");
+    } else {
+      // User is signed out
+    }
   });
 
   const handleSignUp = () => {

@@ -1,16 +1,15 @@
 import { View, Text, Image, ScrollView, StyleSheet } from "react-native";
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { getFoodList } from "../../firebase.js";
-import styles, { primaryColor } from "../../styles/styles";
-import CenterWrapper from "../common/CenterWrapper";
-import VendorFoodItem from "./VendorFoodItem";
-import SearchBar from "../common/SearchBar";
+import { getFoodList } from "../../../firebase.js";
+import styles, { primaryColor }  from "../../../styles/styles.js";
+import CenterWrapper from "../../common/CenterWrapper.js";
+import FoodItem from "./FoodItem.js";
+import SearchBar from "../../common/SearchBar.js";
+import UserContext from "../UserContext.js";
 
-const UserContext = createContext();
-
-const VendorFoodListing = ({ route }) => {
+const FoodListing = ({ route }) => {
   const { vendorId, vendorName, vendorRating, vendorUrl } = route.params;
   const [foodList, setFoodList] = useState(() => []);
 
@@ -24,22 +23,22 @@ const VendorFoodListing = ({ route }) => {
         style={styles.foodBannerImage}
         source={
           !vendorUrl || vendorUrl == ""
-            ? require("../../assets/images/food-1.jpg")
+            ? require("../../../assets/images/food-1.jpg")
             : { uri: vendorUrl }
         }
       />
       <CenterWrapper>
         <View style={vendorFoodListingStyle.titleContainer}>
           <Text style={vendorFoodListingStyle.title}>{vendorName}</Text>
-          <Text style={vendorFoodListingStyle.title}>
+          {/* <Text style={vendorFoodListingStyle.title}>
             {vendorRating}{" "}
             <FontAwesome name="star" size={16} color={primaryColor} />
-          </Text>
+          </Text> */}
         </View>
         <SearchBar placeholder="Search food name.." />
         <UserContext.Provider value={vendorId}>
           {foodList.map((item) => (
-            <VendorFoodItem
+            <FoodItem
               key={item[0]}
               foodId={item[0]}
               url={item[1]}
@@ -54,7 +53,7 @@ const VendorFoodListing = ({ route }) => {
   );
 };
 
-export {VendorFoodListing as default, UserContext};
+export default FoodListing;
 
 const vendorFoodListingStyle = StyleSheet.create({
   titleContainer: {

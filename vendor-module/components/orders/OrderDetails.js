@@ -17,7 +17,6 @@ const OrderDetails = () => {
       <OrderField orderLabel={"Food price"} orderValue={"RM10.00"} />
       <OrderField orderLabel={"Order Time"} orderValue={"1.00 pm"} />
       <OrderField orderLabel={"Quantity"} orderValue={"1"} />
-      <OrderField orderLabel={"Delivery Type"} orderValue={"Take away"} />
       <OrderField orderLabel={"Username"} orderValue={"meegoreng@mail.com"} />
       <CustomButton
         callback={handleReady}

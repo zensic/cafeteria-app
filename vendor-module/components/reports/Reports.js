@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-import styles from "../../styles/styles.js";
-import CenterWrapper from "../common/CenterWrapper.js";
-
 const Reports = () => {
   return (
-    <CenterWrapper>
-      <Text>Reports</Text>
-    </CenterWrapper>
+    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+      <Text style={{fontSize: 16}}>Work in progress</Text>
+    </View>
   );
 };
 

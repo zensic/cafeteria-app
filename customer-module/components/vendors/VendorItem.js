@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons";
-
-import { primaryColor } from "../../styles/styles";
 import { fbGetDownloadURL } from "../../firebase";
 
 const VendorItem = (props) => {
@@ -15,7 +12,7 @@ const VendorItem = (props) => {
   }, []);
 
   const handlePress = () => {
-    nav.navigate("Vendor Food Listing", {
+    nav.navigate("Food Listing", {
       vendorId: props.id,
       vendorName: props.name,
       vendorRating: props.rating,
@@ -29,16 +26,16 @@ const VendorItem = (props) => {
         style={vendorItemStyle.image}
         source={
           !imageUrl || imageUrl == ""
-            ? require("../../assets/images/food-1.jpg")
+            ? require("../../assets/images/no-image.jpg")
             : { uri: imageUrl }
         }
       />
       <View style={vendorItemStyle.textContainer}>
         <Text style={vendorItemStyle.text}>{props.name}</Text>
-        <Text style={vendorItemStyle.text}>
+        {/* <Text style={vendorItemStyle.text}>
           {props.rating}{" "}
           <FontAwesome name="star" size={16} color={primaryColor} />
-        </Text>
+        </Text> */}
       </View>
       <Text>{props.desc}</Text>
     </Pressable>
