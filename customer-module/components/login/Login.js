@@ -1,4 +1,4 @@
-import { View, StyleSheet, ImageBackground, Keyboard } from "react-native";
+import { View, StyleSheet, ImageBackground, Keyboard, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -44,6 +44,7 @@ const Login = () => {
     >
       <LoadingScreen visible={loading} />
       <View style={loginStyle.loginContainer}>
+        <Text style={styles.title}>Student Login</Text>
         <Field
           label={"Username"}
           value={email}
