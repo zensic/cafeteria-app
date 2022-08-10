@@ -3,21 +3,16 @@ import React, { useEffect, useState } from "react";
 import CenterWrapper from "../common/CenterWrapper";
 import OrderItem from "./OrderItem";
 import { fbGetCurrentOrders, fbGetPastOrders } from "../../firebase";
-import { useIsFocused } from "@react-navigation/native";
 
-const OrderListing = () => {
+const OrderListing = ({navigation}) => {
   const [orderList, setOrderList] = useState(() => []);
   const [pastOrderList, setPastOrderList] = useState(() => []);
-  const isFocused = useIsFocused();
+  const isFocused = navigation.isFocused();
 
   useEffect(() => {
     fbGetCurrentOrders(setOrderList);
     fbGetPastOrders(setPastOrderList);
   }, [isFocused]);
-
-  // useEffect(() => {
-
-  // }, [isFocused]);
 
   return (
     <CenterWrapper>

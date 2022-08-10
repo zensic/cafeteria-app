@@ -38,8 +38,9 @@ const OrderListing = ({ navigation }) => {
           >
             <FontAwesome5 name="clipboard" size={24} color="black" />
             <View style={{ marginLeft: 10 }}>
-              <Text>{`#${order.createdAt}`}</Text>
-              <Text>{`${order.customer} ${order.location}`}</Text>
+              <Text>{order.createdAt}</Text>
+              <Text>{order.location}</Text>
+              <Text>{order.customer}</Text>
               <Text>{`${order.name} x${order.quantity}`}</Text>
             </View>
           </Pressable>

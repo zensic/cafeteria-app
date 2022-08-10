@@ -9,7 +9,6 @@ const OrderItem = (props) => {
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
-    console.log(props.url);
     fbGetDownloadURL(props.url, setImageUrl);
   }, [])
 

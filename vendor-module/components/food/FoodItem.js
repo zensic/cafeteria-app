@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { doc, deleteDoc } from "firebase/firestore";
 
 import { db, fbGetDownloadURL } from "../../firebase";
-import styles from "../../styles/styles";
+import styles, { primaryColor } from "../../styles/styles";
 import CustomButton from "../common/CustomButton";
 
 const FoodItem = (props) => {
@@ -55,14 +55,14 @@ const FoodItem = (props) => {
         }
       >
         <View style={styles.foodItemImageContainer}>
-          <Text style={styles.foodItemStar}>
+          {/* <Text style={styles.foodItemStar}>
             4.4 <FontAwesome name="star" size={16} color="white" />
-          </Text>
+          </Text> */}
           <View style={{ flexDirection: "row" }}>
             <CustomButton
               callback={handleEditFood}
               content="Edit"
-              cstyle={styles.foodItemButton}
+              cstyle={[styles.foodItemButton, {backgroundColor: primaryColor}]}
             />
             <CustomButton
               callback={handleDeleteFood}

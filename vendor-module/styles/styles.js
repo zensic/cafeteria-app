@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 5,
     marginLeft: 5,
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
   foodItemTitle: {
     backgroundColor: `${accentColor}`,
@@ -122,5 +122,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export { primaryColor, secondaryColor, accentColor };
+export { primaryColor, secondaryColor, tertiaryColor, accentColor };
 export default styles;
