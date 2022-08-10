@@ -271,6 +271,5 @@ export {
   fbGetVendorDetails,
   fbGetOrders,
   fbGetPastOrders,
-  fbCompleteOrder,
-  fbGetGraph
+  fbCompleteOrder
 };
